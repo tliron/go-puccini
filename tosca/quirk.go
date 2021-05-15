@@ -44,10 +44,15 @@ const QuirkNamespaceNormativeShortcutsDisable Quirk = "namespace.normative.short
 // quirk changes the expected syntax to be a sequenced list.
 const QuirkSubstitutionMappingsRequirementsList Quirk = "substitution_mappings.requirements.list"
 
+// ETSI SOL001 2.x mandates usage of imports that contain topology_template
+// this quirk ignores topology_template in imports
 //
-// Quirks
-//
+const QuirkImportsIgnoreTopologyTemplate Quirk = "imports.ignore.topology_template"
 
+// ETSI SOL001 2.x needs substitutionmappings using unassigned referenced
+const QuirkSubstitutionMappingsRequirementsAllowDangling Quirk = "substitution_mappings.requirements.allow_dangling"
+
+// Quirks
 type Quirks []Quirk
 
 func NewQuirks(quirks ...string) Quirks {
