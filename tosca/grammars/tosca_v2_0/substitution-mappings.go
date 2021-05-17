@@ -85,9 +85,7 @@ func (self *SubstitutionMappings) Render(inputDefinitions ParameterDefinitions) 
 
 	for name, mapping := range self.RequirementMappings {
 		if _, ok := self.NodeType.RequirementDefinitions[name]; !ok {
-			if ! mapping.Context.HasQuirk(tosca.QuirkSubstitutionMappingsRequirementsAllowDangling) {
-				mapping.Context.Clone(name).ReportReferenceNotFound("requirement", self.NodeType)
-			}
+			mapping.Context.Clone(name).ReportReferenceNotFound("requirement", self.NodeType)
 		}
 	}
 
