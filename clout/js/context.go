@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/dop251/goja"
+	"github.com/tliron/kutil/js"
 	"github.com/tliron/kutil/logging"
 	"github.com/tliron/kutil/terminal"
 	urlpkg "github.com/tliron/kutil/url"
@@ -60,7 +61,7 @@ func NewContext(name string, log logging.Logger, arguments map[string]string, qu
 
 func (self *Context) NewCloutRuntime(clout *cloutpkg.Clout, apis map[string]interface{}) *goja.Runtime {
 	runtime := goja.New()
-	runtime.SetFieldNameMapper(mapper)
+	runtime.SetFieldNameMapper(js.CamelCaseMapper)
 
 	runtime.Set("puccini", self.NewPucciniAPI())
 

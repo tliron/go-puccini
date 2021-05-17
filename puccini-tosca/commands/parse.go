@@ -52,10 +52,10 @@ var parseCommand = &cobra.Command{
 			dumpPhases = nil
 		}
 
-		_, s := Parse(url)
+		_, serviceTemplate := Parse(url)
 
 		if (filter == "") && (len(dumpPhases) == 0) {
-			formatpkg.Print(s, format, terminal.Stdout, strict, pretty)
+			formatpkg.Print(serviceTemplate, format, terminal.Stdout, strict, pretty)
 		}
 	},
 }

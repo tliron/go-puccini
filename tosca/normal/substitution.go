@@ -5,15 +5,15 @@ package normal
 //
 
 type Substitution struct {
-	ServiceTemplate *ServiceTemplate
+	ServiceTemplate *ServiceTemplate `json:"-" yaml:"-"`
 
-	Type                string
-	TypeMetadata        map[string]string
-	CapabilityMappings  Mappings
-	RequirementMappings Mappings
-	PropertyMappings    Mappings
-	AttributeMappings   Mappings
-	InterfaceMappings   Mappings
+	Type                string            `json:"type" yaml:"type"`
+	TypeMetadata        map[string]string `json:"typeMetadata" yaml:"typeMetadata"`
+	CapabilityMappings  Mappings          `json:"capabilityMappings" yaml:"capabilityMappings"`
+	RequirementMappings Mappings          `json:"requirementMappings" yaml:"requirementMappings"`
+	PropertyMappings    Mappings          `json:"propertyMappings" yaml:"propertyMappings"`
+	AttributeMappings   Mappings          `json:"attributeMappings" yaml:"attributeMappings"`
+	InterfaceMappings   Mappings          `json:"interfaceMappings" yaml:"interfaceMappings"`
 }
 
 func (self *ServiceTemplate) NewSubstitution() *Substitution {

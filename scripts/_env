@@ -8,6 +8,6 @@ MODULE=github.com/tliron/puccini
 ROOT=$(readlink --canonicalize "$_HERE/..")
 
 GOPATH=${GOPATH:-$HOME/go}
-
 export PATH=$GOPATH/bin:$ROOT:$PATH
+
 export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java}
