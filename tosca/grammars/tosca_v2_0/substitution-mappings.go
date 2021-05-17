@@ -160,7 +160,7 @@ func (self *SubstitutionMappings) Normalize(normalServiceTemplate *normal.Servic
 	for _, mapping := range self.CapabilityMappings {
 		if (mapping.NodeTemplate != nil) && (mapping.CapabilityName != nil) {
 			if normalNodeTemplate, ok := normalServiceTemplate.NodeTemplates[mapping.NodeTemplate.Name]; ok {
-			normalSubstitution.CapabilityMappings[mapping.Name] = normalNodeTemplate.NewMapping("capability", *mapping.CapabilityName)
+				normalSubstitution.CapabilityMappings[mapping.Name] = normalNodeTemplate.NewMapping("capability", *mapping.CapabilityName)
 			}
 		}
 	}
