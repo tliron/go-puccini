@@ -47,7 +47,7 @@ const QuirkSubstitutionMappingsRequirementsList Quirk = "substitution_mappings.r
 // ETSI SOL001 2.x mandates usage of imports that contain topology_template
 // this quirk ignores topology_template in imports
 //
-const QuirkImportsIgnoreTopologyTemplate Quirk = "imports.ignore.topology_template"
+const QuirkImportsTopologyTemplateIgnore Quirk = "imports.ignore.topology_template"
 
 // ETSI SOL001 2.x needs substitutionmappings using unassigned referenced
 const QuirkSubstitutionMappingsRequirementsAllowDangling Quirk = "substitution_mappings.requirements.allow_dangling"
