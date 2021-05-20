@@ -94,7 +94,7 @@ func (self *RequirementMapping) Render() {
 	}
 
 	if !found {
-		if ! self.Context.HasQuirk(tosca.QuirkSubstitutionMappingsRequirementsAllowDangling) {
+		if !self.Context.HasQuirk(tosca.QuirkSubstitutionMappingsRequirementsAllowDangling) {
 			self.Context.ListChild(1, name).ReportReferenceNotFound("requirement", self.NodeTemplate)
 		}
 	}
