@@ -20,7 +20,7 @@ type Type struct {
 	Name    string `namespace:""`
 
 	ParentName  *string  `read:"derived_from"`
-	Version     *Version `read:"version,version"`
+	Version     *Value   `read:"version,Value"`
 	Metadata    Metadata `read:"metadata,!Metadata"`
 	Description *string  `read:"description"`
 
@@ -66,6 +66,14 @@ func (self *Type) SetMetadata(name string, value string) bool {
 
 	self.Metadata[name] = value
 	return true
+}
+
+// parser.Renderable interface
+func (self *Type) Render() {
+	logRender.Debugf("type: %s", self.Name)
+	if self.Version != nil {
+		self.Version.RenderDataType("version")
+	}
 }
 
 func (self *Type) GetMetadataValue(key string) (string, bool) {

@@ -17,7 +17,7 @@ type Substitution struct {
 }
 
 func (self *ServiceTemplate) NewSubstitution() *Substitution {
-	substitutionMappings := &Substitution{
+	substitution := &Substitution{
 		ServiceTemplate:     self,
 		TypeMetadata:        make(map[string]string),
 		CapabilityMappings:  make(Mappings),
@@ -26,6 +26,6 @@ func (self *ServiceTemplate) NewSubstitution() *Substitution {
 		AttributeMappings:   make(Mappings),
 		InterfaceMappings:   make(Mappings),
 	}
-	self.Substitution = substitutionMappings
-	return substitutionMappings
+	self.Substitution = substitution
+	return substitution
 }

@@ -90,7 +90,7 @@ tosca.addHistory = function(description) {
 	else
 		history = history.slice(0);
 	history.push({
-		timestamp: puccini.timestamp(),
+		timestamp: puccini.now(),
 		description: description
 	});
 	metadata.history = history;

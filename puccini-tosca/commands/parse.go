@@ -2,7 +2,6 @@ package commands
 
 import (
 	"sort"
-	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/tliron/kutil/ard"
@@ -29,7 +28,7 @@ var inputValues = make(map[string]interface{})
 func init() {
 	rootCommand.AddCommand(parseCommand)
 	parseCommand.Flags().StringVarP(&template, "template", "t", "", "select service template in CSAR (leave empty for root, or use path or integer index)")
-	parseCommand.Flags().StringToStringVarP(&inputs, "input", "i", nil, "specify input (format is name=value)")
+	parseCommand.Flags().StringToStringVarP(&inputs, "input", "i", nil, "specify an input (format is name=YAML)")
 	parseCommand.Flags().StringVarP(&inputsUrl, "inputs", "n", "", "load inputs from a PATH or URL to YAML content")
 	parseCommand.Flags().Uint32VarP(&stopAtPhase, "stop", "s", 5, "parser phase at which to end")
 	parseCommand.Flags().UintSliceVarP(&dumpPhases, "dump", "d", nil, "dump phase internals")
@@ -232,9 +231,11 @@ func ParseInputs() {
 		}
 	}
 
-	for name, input := range inputs {
-		value, err := yamlkeys.Decode(strings.NewReader(input))
-		util.FailOnError(err)
-		inputValues[name] = value
+	if inputs != nil {
+		for name, input := range inputs {
+			input_, _, err := ard.DecodeYAML(input, false)
+			util.FailOnError(err)
+			inputValues[name] = input_
+		}
 	}
 }

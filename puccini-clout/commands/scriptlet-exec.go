@@ -14,7 +14,7 @@ var arguments map[string]string
 func init() {
 	scriptletCommand.AddCommand(execCommand)
 	execCommand.Flags().StringVarP(&output, "output", "o", "", "output to file or directory (default is stdout)")
-	execCommand.Flags().StringToStringVarP(&arguments, "argument", "a", nil, "specify a scriptlet argument (format is key=value")
+	execCommand.Flags().StringToStringVarP(&arguments, "argument", "a", nil, "specify a scriptlet argument (format is key=value)")
 }
 
 var execCommand = &cobra.Command{

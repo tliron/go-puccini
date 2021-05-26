@@ -27,6 +27,8 @@ node_types:
     # metadata for each one, so you can decide to interpret any metadata as inheritable
     metadata:
       galactic.planet: Jupiter
+    # Types can also have a semantic version
+    version: 1.0.0
 
 topology_template:
 

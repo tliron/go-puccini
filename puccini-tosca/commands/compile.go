@@ -26,7 +26,7 @@ func init() {
 	compileCommand.Flags().BoolVarP(&resolve, "resolve", "r", true, "resolves the topology (attempts to satisfy all requirements with capabilities)")
 	compileCommand.Flags().BoolVarP(&coerce, "coerce", "c", false, "coerces all values (calls functions and applies constraints)")
 	compileCommand.Flags().StringVarP(&exec, "exec", "e", "", "execute JavaScript scriptlet")
-	compileCommand.Flags().StringToStringVarP(&arguments, "argument", "a", nil, "used with --exec to specify a scriptlet argument (format is key=value")
+	compileCommand.Flags().StringToStringVarP(&arguments, "argument", "a", nil, "used with --exec to specify a scriptlet argument (format is key=value)")
 }
 
 var compileCommand = &cobra.Command{
