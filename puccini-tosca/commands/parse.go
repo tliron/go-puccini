@@ -63,7 +63,11 @@ func Parse(url string) (*parser.Context, *normal.ServiceTemplate) {
 	ParseInputs()
 
 	urlContext := urlpkg.NewContext()
-	defer urlContext.Release()
+	util.OnExit(func() {
+		if err := urlContext.Release(); err != nil {
+			log.Errorf("%s", err.Error())
+		}
+	})
 
 	var url_ urlpkg.URL
 	var err error
@@ -211,7 +215,11 @@ func ParseInputs() {
 		log.Infof("load inputs from %q", inputsUrl)
 
 		urlContext := urlpkg.NewContext()
-		defer urlContext.Release()
+		util.OnExit(func() {
+			if err := urlContext.Release(); err != nil {
+				log.Errorf("%s", err.Error())
+			}
+		})
 
 		url, err := urlpkg.NewValidURL(inputsUrl, nil, urlContext)
 		util.FailOnError(err)

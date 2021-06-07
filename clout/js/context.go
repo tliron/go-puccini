@@ -1,7 +1,6 @@
 package js
 
 import (
-	"fmt"
 	"io"
 	"os"
 	"sync"
@@ -11,7 +10,6 @@ import (
 	"github.com/tliron/kutil/logging"
 	"github.com/tliron/kutil/terminal"
 	urlpkg "github.com/tliron/kutil/url"
-	"github.com/tliron/kutil/util"
 	cloutpkg "github.com/tliron/puccini/clout"
 )
 
@@ -59,68 +57,49 @@ func NewContext(name string, log logging.Logger, arguments map[string]string, qu
 	}
 }
 
-func (self *Context) NewCloutRuntime(clout *cloutpkg.Clout, apis map[string]interface{}) *goja.Runtime {
-	runtime := goja.New()
-	runtime.SetFieldNameMapper(js.CamelCaseMapper)
+func (self *Context) NewEnvironment(clout *cloutpkg.Clout, apis map[string]interface{}) *js.Environment {
+	environment := js.NewEnvironment(self.URLContext)
 
-	runtime.Set("puccini", self.NewPucciniAPI())
+	environment.CreateResolver = func(url urlpkg.URL, context *js.Context) js.ResolveFunc {
+		return func(id string) (urlpkg.URL, error) {
+			if scriptlet, err := GetScriptlet(id, clout); err == nil {
+				url := urlpkg.NewInternalURL(id, self.URLContext)
+				url.Content = scriptlet
+				return url, nil
+			} else {
+				return nil, err
+			}
+		}
+	}
 
-	runtime.Set("clout", self.NewCloutAPI(clout, runtime))
+	environment.Extensions = append(environment.Extensions, js.Extension{
+		Name: "puccini",
+		Create: func(context *js.Context) goja.Value {
+			return context.Environment.Runtime.ToValue(self.NewPucciniAPI())
+		},
+	})
+
+	environment.Extensions = append(environment.Extensions, js.Extension{
+		Name: "clout",
+		Create: func(context *js.Context) goja.Value {
+			return context.Environment.Runtime.ToValue(self.NewCloutAPI(clout, context))
+		},
+	})
 
 	for name, api := range apis {
-		runtime.Set(name, api)
+		environment.Extensions = append(environment.Extensions, js.Extension{
+			Name: name,
+			Create: func(context *js.Context) goja.Value {
+				return context.Environment.Runtime.ToValue(api)
+			},
+		})
 	}
 
-	return runtime
+	return environment
 }
 
-func (self *Context) GetProgram(name string, scriptlet string) (*goja.Program, error) {
-	p, ok := self.programCache.Load(scriptlet)
-	if !ok {
-		program, err := goja.Compile(name, scriptlet, true)
-		if err != nil {
-			return nil, err
-		}
-		p, _ = self.programCache.LoadOrStore(scriptlet, program)
-	}
-
-	return p.(*goja.Program), nil
-}
-
-func (self *Context) Exec(clout *cloutpkg.Clout, scriptletName string, apis map[string]interface{}) error {
-	scriptlet, err := GetScriptlet(scriptletName, clout)
-	if err != nil {
-		return err
-	}
-
-	program, err := self.GetProgram(scriptletName, scriptlet)
-	if err != nil {
-		return err
-	}
-
-	runtime := self.NewCloutRuntime(clout, apis)
-
-	_, err = runtime.RunProgram(program)
-	return UnwrapException(err)
-}
-
-func (self *Context) Fail(message string) {
-	if !self.Quiet {
-		stylist := self.Stylist
-		if stylist == nil {
-			stylist = terminal.NewStylist(false)
-		}
-		fmt.Fprintln(self.Stderr, stylist.Error(message))
-	}
-	util.Exit(1)
-}
-
-func (self *Context) Failf(format string, args ...interface{}) {
-	self.Fail(fmt.Sprintf(format, args...))
-}
-
-func (self *Context) FailOnError(err error) {
-	if err != nil {
-		self.Fail(err.Error())
-	}
+func (self *Context) Require(clout *cloutpkg.Clout, scriptletName string, apis map[string]interface{}) error {
+	environment := self.NewEnvironment(clout, apis)
+	_, err := environment.RequireID(scriptletName)
+	return err
 }

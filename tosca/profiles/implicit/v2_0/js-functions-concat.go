@@ -10,7 +10,7 @@ func init() {
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 4.3.1
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 4.3.1
 
-function evaluate() {
+exports.evaluate = function() {
 	var a = [];
 	var length = arguments.length;
 	for (var i = 0; i < length; i++) {
@@ -20,6 +20,6 @@ function evaluate() {
 		a.push(argument);
 	}
 	return a.join('');
-}
+};
 `
 }

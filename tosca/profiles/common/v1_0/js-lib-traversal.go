@@ -5,38 +5,38 @@ package v1_0
 func init() {
 	Profile["/tosca/common/1.0/js/lib/traversal.js"] = `
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-tosca.toCoercibles = function(clout_) {
+exports.toCoercibles = function(clout_) {
 	if (!clout_)
 		clout_ = clout;
-	tosca.traverseValues(clout_, function(data) {
+	exports.traverseValues(clout_, function(data) {
 		return clout_.newCoercible(data.value, data.site, data.source, data.target);
 	});
 };
 
-tosca.unwrapCoercibles = function(clout_) {
+exports.unwrapCoercibles = function(clout_) {
 	if (!clout_)
 		clout_ = clout;
-	tosca.traverseValues(clout_, function(data) {
+	exports.traverseValues(clout_, function(data) {
 		return clout_.unwrap(data.value);
 	});
 };
 
-tosca.coerce = function(clout_) {
+exports.coerce = function(clout_) {
 	if (!clout_)
 		clout_ = clout;
-	tosca.toCoercibles(clout_);
-	tosca.traverseValues(clout_, function(data) {
+	exports.toCoercibles(clout_);
+	exports.traverseValues(clout_, function(data) {
 		return clout_.coerce(data.value);
 	});
 };
 
-tosca.getValueInformation = function(clout_) {
+exports.getValueInformation = function(clout_) {
 	if (!clout_)
 		clout_ = clout;
 	var information = {};
-	tosca.traverseValues(clout_, function(data) {
+	exports.traverseValues(clout_, function(data) {
 		if (data.value.$information)
 			information[data.path.join('.')] = data.value.$information;
 		return data.value;
@@ -44,13 +44,13 @@ tosca.getValueInformation = function(clout_) {
 	return information;
 };
 
-tosca.traverseValues = function(clout_, traverser) {
+exports.traverseValues = function(clout_, traverser) {
 	if (!clout_)
 		clout_ = clout;
 
 	if (tosca.isTosca(clout_)) {
-		tosca.traverseObjectValues(traverser, ['inputs'], clout_.properties.tosca.inputs);
-		tosca.traverseObjectValues(traverser, ['outputs'], clout_.properties.tosca.outputs);
+		exports.traverseObjectValues(traverser, ['inputs'], clout_.properties.tosca.inputs);
+		exports.traverseObjectValues(traverser, ['outputs'], clout_.properties.tosca.outputs);
 	}
 
 	for (var vertexId in clout_.vertexes) {
@@ -62,21 +62,21 @@ tosca.traverseValues = function(clout_, traverser) {
 			var nodeTemplate = vertex.properties;
 			var path = ['nodeTemplates', nodeTemplate.name];
 
-			tosca.traverseObjectValues(traverser, copyAndPush(path, 'properties'), nodeTemplate.properties, vertex);
-			tosca.traverseObjectValues(traverser, copyAndPush(path, 'attributes'), nodeTemplate.attributes, vertex);
-			tosca.traverseInterfaceValues(traverser, copyAndPush(path, 'interfaces'), nodeTemplate.interfaces, vertex)
+			exports.traverseObjectValues(traverser, copyAndPush(path, 'properties'), nodeTemplate.properties, vertex);
+			exports.traverseObjectValues(traverser, copyAndPush(path, 'attributes'), nodeTemplate.attributes, vertex);
+			exports.traverseInterfaceValues(traverser, copyAndPush(path, 'interfaces'), nodeTemplate.interfaces, vertex)
 
 			for (var capabilityName in nodeTemplate.capabilities) {
 				var capability = nodeTemplate.capabilities[capabilityName];
 				var capabilityPath = copyAndPush(path, 'capabilities', capabilityName);
-				tosca.traverseObjectValues(traverser, copyAndPush(capabilityPath, 'properties'), capability.properties, vertex);
-				tosca.traverseObjectValues(traverser, copyAndPush(capabilityPath, 'attributes'), capability.attributes, vertex);
+				exports.traverseObjectValues(traverser, copyAndPush(capabilityPath, 'properties'), capability.properties, vertex);
+				exports.traverseObjectValues(traverser, copyAndPush(capabilityPath, 'attributes'), capability.attributes, vertex);
 			}
 
 			for (var artifactName in nodeTemplate.artifacts) {
 				var artifact = nodeTemplate.artifacts[artifactName];
 				var artifactPath = copyAndPush(path, 'artifacts', artifactName);
-				tosca.traverseObjectValues(traverser, copyAndPush(artifactPath, 'properties'), artifact.properties, vertex);
+				exports.traverseObjectValues(traverser, copyAndPush(artifactPath, 'properties'), artifact.properties, vertex);
 				if (artifact.credential !== null)
 					try {
 						artifact.credential = traverser({
@@ -100,36 +100,36 @@ tosca.traverseValues = function(clout_, traverser) {
 
 				var relationship = edge.properties;
 				var relationshipPath = copyAndPush(path, 'relationships', relationship.name);
-				tosca.traverseObjectValues(traverser, copyAndPush(relationshipPath, 'properties'), relationship.properties, edge, vertex, edge.target);
-				tosca.traverseObjectValues(traverser,copyAndPush(relationshipPath, 'attributes'), relationship.attributes, edge, vertex, edge.target);
-				tosca.traverseInterfaceValues(traverser, copyAndPush(relationshipPath, 'interfaces'), relationship.interfaces, edge, vertex, edge.target);
+				exports.traverseObjectValues(traverser, copyAndPush(relationshipPath, 'properties'), relationship.properties, edge, vertex, edge.target);
+				exports.traverseObjectValues(traverser,copyAndPush(relationshipPath, 'attributes'), relationship.attributes, edge, vertex, edge.target);
+				exports.traverseInterfaceValues(traverser, copyAndPush(relationshipPath, 'interfaces'), relationship.interfaces, edge, vertex, edge.target);
 			}
 		} else if (tosca.isTosca(vertex, 'Group')) {
 			var group = vertex.properties;
 			var path = ['groups', group.name];
 
-			tosca.traverseObjectValues(traverser, copyAndPush(path, 'properties'), group.properties, vertex);
-			tosca.traverseInterfaceValues(traverser, copyAndPush(path, 'attributes'), group.interfaces, vertex)
+			exports.traverseObjectValues(traverser, copyAndPush(path, 'properties'), group.properties, vertex);
+			exports.traverseInterfaceValues(traverser, copyAndPush(path, 'attributes'), group.interfaces, vertex)
 		} else if (tosca.isTosca(vertex, 'Policy')) {
 			var policy = vertex.properties;
 			var path = ['policies', policy.name];
 
-			tosca.traverseObjectValues(traverser, copyAndPush(path, 'properties'), policy.properties, vertex);
+			exports.traverseObjectValues(traverser, copyAndPush(path, 'properties'), policy.properties, vertex);
 		}
 	}
 };
 
-tosca.traverseInterfaceValues = function(traverser, path, interfaces, site, source, target) {
+exports.traverseInterfaceValues = function(traverser, path, interfaces, site, source, target) {
 	for (var interfaceName in interfaces) {
 		var interface_ = interfaces[interfaceName];
 		var interfacePath = copyAndPush(path, interfaceName)
-		tosca.traverseObjectValues(traverser, copyAndPush(interfacePath, 'inputs'), interface_.inputs, site, source, target);
+		exports.traverseObjectValues(traverser, copyAndPush(interfacePath, 'inputs'), interface_.inputs, site, source, target);
 		for (var operationName in interface_.operations)
-			tosca.traverseObjectValues(traverser, copyAndPush(interfacePath, 'operations', operationName), interface_.operations[operationName].inputs, site, source, target);
+			exports.traverseObjectValues(traverser, copyAndPush(interfacePath, 'operations', operationName), interface_.operations[operationName].inputs, site, source, target);
 	}
 };
 
-tosca.traverseObjectValues = function(traverser, path, object, site, source, target) {
+exports.traverseObjectValues = function(traverser, path, object, site, source, target) {
 	for (var key in object)
 		try {
 			object[key] = traverser({

@@ -19,14 +19,6 @@ type FunctionCallContext struct {
 	Target interface{}
 }
 
-func (self FunctionCallContext) API() map[string]interface{} {
-	return map[string]interface{}{
-		"$site":   self.Site,
-		"$source": self.Source,
-		"$target": self.Target,
-	}
-}
-
 //
 // FunctionCall
 //

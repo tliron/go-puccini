@@ -10,9 +10,9 @@ func init() {
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 4.7.1
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 4.7.1
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-function evaluate(typeName) {
+exports.evaluate = function(typeName) {
 	if (arguments.length !== 1)
 		throw 'must have 1 argument';
 	var names = [];
@@ -22,6 +22,6 @@ function evaluate(typeName) {
 			names.push(vertex.properties.name);
 	}
 	return names;
-}
+};
 `
 }

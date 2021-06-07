@@ -1,7 +1,5 @@
 
-var tosca = {};
-
-tosca.isTosca = function(o, kind) {
+exports.isTosca = function(o, kind) {
 	if (o.metadata === undefined)
 		return false;
 	o = o.metadata['puccini'];
@@ -14,8 +12,8 @@ tosca.isTosca = function(o, kind) {
 	return true;
 };
 
-tosca.isNodeTemplate = function(vertex, typeName) {
-	if (tosca.isTosca(vertex, 'NodeTemplate')) {
+exports.isNodeTemplate = function(vertex, typeName) {
+	if (exports.isTosca(vertex, 'NodeTemplate')) {
 		if (typeName !== undefined)
 			return typeName in vertex.properties.types;
 		return true;
@@ -23,7 +21,7 @@ tosca.isNodeTemplate = function(vertex, typeName) {
 	return false;
 };
 
-tosca.setOutputValue = function(name, value) {
+exports.setOutputValue = function(name, value) {
 	if (clout.properties.tosca === undefined)
 		return false;
 	var output = clout.properties.tosca.outputs[name];
@@ -47,7 +45,7 @@ tosca.setOutputValue = function(name, value) {
 	return true;
 };
 
-tosca.getPolicyTargets = function(vertex) {
+exports.getPolicyTargets = function(vertex) {
 	var targets = [];
 
 	function addTarget(target) {
@@ -59,10 +57,10 @@ tosca.getPolicyTargets = function(vertex) {
 
 	for (var e = 0, l = vertex.edgesOut.length; e < l; e++) {
 		var edge = vertex.edgesOut[e];
-		if (tosca.isTosca(edge, 'NodeTemplateTarget'))
+		if (exports.isTosca(edge, 'NodeTemplateTarget'))
 			targets.push(clout.vertexes[edge.targetID].properties);
-		else if (tosca.isTosca(edge, 'GroupTarget')) {
-			var members = tosca.getGroupMembers(clout.vertexes[edge.targetID]);
+		else if (toexportssca.isTosca(edge, 'GroupTarget')) {
+			var members = exports.getGroupMembers(clout.vertexes[edge.targetID]);
 			for (var m = 0, ll = members.length; m < ll; m++)
 				addTarget(members[m])
 		}
@@ -70,17 +68,17 @@ tosca.getPolicyTargets = function(vertex) {
 	return targets;
 };
 
-tosca.getGroupMembers = function(vertex) {
+exports.getGroupMembers = function(vertex) {
 	var members = [];
 	for (var e = 0, l = vertex.edgesOut.length; e < l; e++) {
 		var edge = vertex.edgesOut[e];
-		if (tosca.isTosca(edge, 'Member'))
+		if (exports.isTosca(edge, 'Member'))
 			members.push(clout.vertexes[edge.targetID].properties);
 	}
 	return members;
 };
 
-tosca.addHistory = function(description) {
+exports.addHistory = function(description) {
 	var metadata = clout.metadata;
 	if (metadata === undefined)
 		metadata = clout.metadata = {};
@@ -96,12 +94,12 @@ tosca.addHistory = function(description) {
 	metadata.history = history;
 };
 
-tosca.getNestedValue = function(singular, plural, args) {
+exports.getNestedValue = function(singular, plural, args) {
 	args = Array.prototype.slice.call(args);
 	var length = args.length;
 	if (length < 2)
 		throw 'must have at least 2 arguments';
-	var nodeTemplate = tosca.getModelableEntity(args[0]);
+	var nodeTemplate = exports.getModelableEntity.call(this, args[0]);
 	var a = 1;
 	var arg = args[a];
 	var value = nodeTemplate[plural];
@@ -133,47 +131,47 @@ tosca.getNestedValue = function(singular, plural, args) {
 	return value;
 };
 
-tosca.getModelableEntity = function(entity) {
+exports.getModelableEntity = function(entity) {
 	var vertex;
 	switch (entity) {
 	case 'SELF':
-		if ((typeof $site === 'undefined') || !$site)
+		if (!this || !this.site)
 			throw puccini.sprintf('"%s" cannot be used in this context', entity);
-		vertex = $site;
+		vertex = this.site;
 		break;
 	case 'SOURCE':
-		if ((typeof $source === 'undefined') || !$source)
+		if (!this || !this.source)
 			throw puccini.sprintf('"%s" cannot be used in this context', entity);
-		vertex = $source;
+		vertex = this.source;
 		break;
 	case 'TARGET':
-		if ((typeof $target === 'undefined') || !$target)
+		if (!this || !this.target)
 			throw puccini.sprintf('"%s" cannot be used in this context', entity);
-		vertex = $target;
+		vertex = this.target;
 		break;
 	case 'HOST':
-		if ((typeof $site === 'undefined') || !$site)
+		if (!this || !this.site)
 			throw puccini.sprintf('"%s" cannot be used in this context', entity);
-		vertex = tosca.getHost($site);
+		vertex = exports.getHost(this.site);
 		break;
 	default:
 		for (var vertexId in clout.vertexes) {
 			var vertex = clout.vertexes[vertexId];
-			if (tosca.isNodeTemplate(vertex) && (vertex.properties.name === entity))
+			if (exports.isNodeTemplate(vertex) && (vertex.properties.name === entity))
 				return vertex.properties;
 		}
 		vertex = {};
 	}
-	if (tosca.isNodeTemplate(vertex))
+	if (exports.isNodeTemplate(vertex))
 		return vertex.properties;
 	else
 		throw puccini.sprintf('node template "%s" not found', entity);
 };
 
-tosca.getHost = function(vertex) {
+exports.getHost = function(vertex) {
 	for (var e = 0, l = vertex.edgesOut.length; e < l; e++) {
 		var edge = vertex.edgesOut[e];
-		if (tosca.isTosca(edge, 'Relationship')) {
+		if (exports.isTosca(edge, 'Relationship')) {
 			for (var typeName in edge.properties.types) {
 				var type = edge.properties.types[typeName];
 				if (type.metadata.role === 'host')
@@ -181,13 +179,13 @@ tosca.getHost = function(vertex) {
 			}
 		}
 	}
-	if (tosca.isNodeTemplate(vertex))
+	if (exports.isNodeTemplate(vertex))
 		throw puccini.sprintf('"HOST" not found for node template "%s"', vertex.properties.name);
 	else
 		throw '"HOST" not found';
 };
 
-tosca.getComparable = function(v) {
+exports.getComparable = function(v) {
 	if ((v === undefined) || (v === null))
 		return null;
 	var c = v.$number;
@@ -199,14 +197,14 @@ tosca.getComparable = function(v) {
 	return v;
 };
 
-tosca.compare = function(v1, v2) {
+exports.compare = function(v1, v2) {
 	var c = v1.$comparer;
 	if (c === undefined)
 		c = v2.$comparer;
 	if (c !== undefined)
 		return clout.call(c, 'compare', [v1, v2]);
-	v1 = tosca.getComparable(v1);
-	v2 = tosca.getComparable(v2);
+	v1 = exports.getComparable(v1);
+	v2 = exports.getComparable(v2);
 	if (v1 == v2)
 		return 0;
 	else if (v1 < v2)

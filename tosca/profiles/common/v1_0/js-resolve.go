@@ -5,7 +5,8 @@ package v1_0
 func init() {
 	Profile["/tosca/common/1.0/js/resolve.js"] = `
 
-clout.exec('tosca.lib.traversal');
+const traversal = require('tosca.lib.traversal');
+const tosca = require('tosca.lib.utils');
 
 // Remove existing relationships
 var nodeTemplateVertexes = [];
@@ -29,7 +30,7 @@ nodeTemplateVertexes.sort(function(a, b) {
 	return a.properties.name < b.properties.name ? -1 : 1;
 });
 
-tosca.toCoercibles();
+traversal.toCoercibles();
 
 // Resolve all requirements
 for (var v = 0, l = nodeTemplateVertexes.length; v < l; v++) {
@@ -56,7 +57,7 @@ for (var v = 0, l = nodeTemplateVertexes.length; v < l; v++) {
 	}
 }
 
-tosca.unwrapCoercibles();
+traversal.unwrapCoercibles();
 
 if (puccini.arguments.history !== 'false')
 	tosca.addHistory('resolve');

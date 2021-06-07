@@ -1,5 +1,5 @@
 
-function validate(v, format) {
+exports.validate = function(v, format) {
 	if (arguments.length !== 2)
 		throw 'must have 1 argument';
 	if (!puccini.isType(v, 'ard.string'))
@@ -14,4 +14,4 @@ function validate(v, format) {
 			throw x;
 	}
 	return true;
-}
+};

@@ -1,7 +1,7 @@
 
 // [TOSCA-Simple-Profile-YAML-v1.3] @ 4.3.2
 
-function evaluate() {
+exports.evaluate = function() {
 	var length = arguments.length;
 	if ((length < 1) || (length > 2))
 		throw 'must have 1 or 2 arguments';
@@ -16,4 +16,4 @@ function evaluate() {
 		a.push(argument);
 	}
 	return a.join(delimiter);
-}
+};

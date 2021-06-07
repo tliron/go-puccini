@@ -5,7 +5,8 @@ package v1_0
 func init() {
 	Profile["/tosca/common/1.0/js/diff.js"] = `
 
-clout.exec('tosca.lib.traversal');
+const traversal = require('tosca.lib.traversal');
+const tosca = require('tosca.lib.utils');
 
 if (!puccini.arguments.base) {
     throw 'must provide "base" argument';
@@ -13,8 +14,8 @@ if (!puccini.arguments.base) {
 
 var base = clout.load(puccini.arguments.base);
 
-tosca.coerce();
-tosca.coerce(base);
+traversal.coerce();
+traversal.coerce(base);
 
 puccini.write(diff(clout, base));
 

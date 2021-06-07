@@ -5,9 +5,10 @@ package v1_0
 func init() {
 	Profile["/tosca/common/1.0/js/visualize.js"] = `
 
-clout.exec('tosca.lib.traversal');
-
-tosca.coerce();
+const traversal = require('tosca.lib.traversal');
+const tosca = require('tosca.lib.utils');
+puccini.log.infof('%v', traversal)
+traversal.coerce();
 
 // From: cdnjs.com
 var jQueryVersion = '3.6.0';

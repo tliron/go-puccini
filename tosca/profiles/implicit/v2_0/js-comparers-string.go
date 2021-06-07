@@ -5,7 +5,8 @@ package v2_0
 func init() {
 	Profile["/tosca/implicit/2.0/js/comparers/string.js"] = `
 
-function compare(a, b) {
-}
+exports.compare = function(a, b) {
+    // TODO
+};
 `
 }

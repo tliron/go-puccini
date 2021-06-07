@@ -1,5 +1,5 @@
 
-function validate(v, limits) {
+exports.validate = function(v, limits) {
 	if (arguments.length !== 2)
 		throw 'must have 1 argument';
 	if ((limits.min === undefined) && (limits.max === undefined))
@@ -13,4 +13,4 @@ function validate(v, limits) {
 		if (v.length > limits.max)
 			return false;
 	return true;
-}
+};

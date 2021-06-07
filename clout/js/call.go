@@ -6,15 +6,10 @@ import (
 	"github.com/dop251/goja"
 )
 
-func CallFunction(runtime *goja.Runtime, functionName string, arguments []interface{}) (interface{}, error) {
-	value := runtime.Get(functionName)
-	if value == nil {
-		return nil, fmt.Errorf("scriptlet does not have a %q function", functionName)
-	}
-
-	function, ok := goja.AssertFunction(value)
+func CallFunction(runtime *goja.Runtime, function goja.Value, this interface{}, arguments []interface{}) (interface{}, error) {
+	function_, ok := goja.AssertFunction(function)
 	if !ok {
-		return nil, fmt.Errorf("scriptlet has a %q variable but it's not a function", functionName)
+		return nil, fmt.Errorf("not a function: %v", function)
 	}
 
 	values := make([]goja.Value, len(arguments))
@@ -22,7 +17,7 @@ func CallFunction(runtime *goja.Runtime, functionName string, arguments []interf
 		values[index] = runtime.ToValue(argument)
 	}
 
-	r, err := function(nil, values...)
+	r, err := function_(runtime.ToValue(this), values...)
 	if err != nil {
 		return nil, UnwrapException(err)
 	}

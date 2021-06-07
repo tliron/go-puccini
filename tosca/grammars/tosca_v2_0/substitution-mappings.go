@@ -24,7 +24,7 @@ type SubstitutionMappings struct {
 	PropertyMappings    PropertyMappings    `read:"properties,PropertyMapping"`     // introduced in TOSCA 1.2
 	AttributeMappings   AttributeMappings   `read:"attributes,AttributeMapping"`    // introduced in TOSCA 1.3
 	InterfaceMappings   InterfaceMappings   `read:"interfaces,InterfaceMapping"`    // introduced in TOSCA 1.2
-	SubstitutionFilter  NodeFilter          `read:"substitution_filter,NodeFilter"` // introduced in TOSCA 1.3
+	SubstitutionFilter  *NodeFilter         `read:"substitution_filter,NodeFilter"` // introduced in TOSCA 1.3
 
 	NodeType *NodeType `lookup:"node_type,NodeTypeName" json:"-" yaml:"-"`
 }

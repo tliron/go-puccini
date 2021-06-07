@@ -32,7 +32,7 @@ type PucciniAPI struct {
 	Output          string
 	Format          string
 	Strict          bool
-	AllowTimestamps bool
+	AllowTimestamps bool // TODO
 	Pretty          bool
 
 	context *Context
@@ -44,6 +44,7 @@ func (self *Context) NewPucciniAPI() *PucciniAPI {
 		format = "yaml"
 	}
 	return &PucciniAPI{
+		FileAPI:         js.NewFileAPI(self.URLContext),
 		Arguments:       self.Arguments,
 		Log:             self.Log,
 		Stdout:          self.Stdout,
@@ -101,14 +102,6 @@ func (self *PucciniAPI) Write(data interface{}, path string, dontOverwrite bool)
 	}
 
 	self.failOnError(formatpkg.WriteOrPrint(data, self.Format, self.Stdout, self.Strict, self.Pretty, output))
-}
-
-func (self *PucciniAPI) Download(sourceUrl string, targetPath string) error {
-	if sourceUrl_, err := urlpkg.NewValidURL(sourceUrl, nil, self.context.URLContext); err == nil {
-		return urlpkg.DownloadTo(sourceUrl_, targetPath)
-	} else {
-		return err
-	}
 }
 
 func (self *PucciniAPI) LoadString(url string) (string, error) {

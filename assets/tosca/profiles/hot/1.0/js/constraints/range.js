@@ -1,7 +1,7 @@
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-function validate(v, bounds) {
+exports.validate = function(v, bounds) {
 	if (arguments.length !== 2)
 		throw 'must have 1 arguments';
 	if ((bounds.min === undefined) && (bounds.max === undefined))
@@ -14,4 +14,4 @@ function validate(v, bounds) {
 		if (tosca.compare(v, bounds.max) > 0)
 			return false;
 	return true;
-}
+};

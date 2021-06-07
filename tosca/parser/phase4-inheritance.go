@@ -79,6 +79,7 @@ func (self *InheritContext) NewExecutor(entityPtr tosca.EntityPtr) Executor {
 	}
 }
 
+// TODO: rare race condition due to concurrent access of reflect type
 func (self *InheritContext) GetDependencies(entityPtr tosca.EntityPtr) map[tosca.EntityPtr]bool {
 	dependencies := make(map[tosca.EntityPtr]bool)
 

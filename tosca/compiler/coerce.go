@@ -14,7 +14,7 @@ func Coerce(clout *cloutpkg.Clout, problems *problemspkg.Problems, urlContext *u
 		arguments["history"] = "false"
 	}
 	context := js.NewContext("tosca.coerce", log, arguments, true, format, strict, allowTimestamps, pretty, "", urlContext)
-	if err := context.Exec(clout, "tosca.coerce", map[string]interface{}{"problems": problems}); err != nil {
+	if err := context.Require(clout, "tosca.coerce", map[string]interface{}{"problems": problems}); err != nil {
 		problems.ReportError(err)
 	}
 }

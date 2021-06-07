@@ -1,7 +1,7 @@
 
 // [https://docs.openstack.org/heat/wallaby/template_guide/hot_spec.html#list_join]
 
-function evaluate() {
+exports.evaluate = function() {
 	var length = arguments.length;
 	if (length < 1)
 		throw 'must have at least 1 arguments';
@@ -13,4 +13,4 @@ function evaluate() {
 		a.push(argument);
 	}
 	return a.join(arguments[0]);
-}
+};

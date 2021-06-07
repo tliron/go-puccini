@@ -1,7 +1,7 @@
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-function validate(v, rules) {
+exports.validate = function(v, rules) {
 	if (arguments.length !== 2)
 		throw 'must have 1 arguments';
 	if ((rules.step === undefined) || (rules.offset === undefined))
@@ -10,4 +10,4 @@ function validate(v, rules) {
 	var step = tosca.getComparable(rules.step);
 	var offset = tosca.getComparable(rules.offset);
 	return value % self.step == self.offset;
-}
+};

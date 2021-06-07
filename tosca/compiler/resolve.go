@@ -14,7 +14,7 @@ func Resolve(clout *cloutpkg.Clout, problems *problemspkg.Problems, urlContext *
 		arguments["history"] = "false"
 	}
 	context := js.NewContext("tosca.resolve", log, arguments, true, format, strict, allowTimestamps, pretty, "", urlContext)
-	if err := context.Exec(clout, "tosca.resolve", map[string]interface{}{"problems": problems}); err != nil {
+	if err := context.Require(clout, "tosca.resolve", map[string]interface{}{"problems": problems}); err != nil {
 		problems.ReportError(err)
 	}
 }

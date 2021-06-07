@@ -1,25 +1,26 @@
 
-clout.exec('tosca.lib.traversal');
-
-// This is a copy of the built-in get_input function source
-// Except that we added a "* 2" to the returned result
-function evaluate(input) {
-	if (arguments.length !== 1)
-		throw 'must have 1 argument';
-	if (!tosca.isTosca(clout))
-		throw 'Clout is not TOSCA';
-	var inputs = clout.properties.tosca.inputs;
-	if (!(input in inputs))
-		throw puccini.sprintf('input "%s" not found', input);
-	var r = inputs[input];
-	r = clout.coerce(r);
-	return r * 2;
-}
+const traversal = require('tosca.lib.traversal');
 
 // The "clout.define" API accepts the scriptlet source code as text
-// So our little trick is to define the function above and then "stringify" it here
-clout.define('tosca.function.get_input', "clout.exec('tosca.lib.utils');\n" + evaluate);
+clout.define('tosca.function.get_input', "\n\
+const tosca = require('tosca.lib.utils');\n\
+\n\
+// This is a copy of the built-in get_input function source\n\
+// Except that we added a '* 2' to the returned result\n\
+exports.evaluate = function(input) {\n\
+	if (arguments.length !== 1)\n\
+		throw 'must have 1 argument';\n\
+	if (!tosca.isTosca(clout))\n\
+		throw 'Clout is not TOSCA';\n\
+	var inputs = clout.properties.tosca.inputs;\n\
+	if (!(input in inputs))\n\
+		throw puccini.sprintf('input \"%s\" not found', input);\n\
+	var r = inputs[input];\n\
+	r = clout.coerce(r);\n\
+	return r * 2;\n\
+};\n\
+");
 
-tosca.coerce();
+traversal.coerce();
 
 puccini.write(clout);

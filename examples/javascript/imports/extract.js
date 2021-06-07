@@ -1,8 +1,9 @@
 // This scriptlet extracts all artifacts to the output directory
 
-clout.exec('tosca.lib.traversal');
+traversal = require('tosca.lib.traversal');
+tosca = require('tosca.lib.utils');
 
-tosca.coerce();
+traversal.coerce();
 
 for (var vertexId in clout.vertexes) {
 	var vertex = clout.vertexes[vertexId];

@@ -10,7 +10,7 @@ func init() {
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 3.2.2
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.2.2
 
-function compare(a, b) {
+exports.compare = function(a, b) {
 	if (a.$comparer !== b.$comparer)
 		throw 'both values must be of type "version"';
 	if (a.major !== b.major)
@@ -26,6 +26,6 @@ function compare(a, b) {
 	if (a.build !== b.build)
 		return a.build < b.build ? -1 : 1;
 	return 0;
-}
+};
 `
 }

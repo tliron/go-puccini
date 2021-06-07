@@ -5,7 +5,7 @@ package v2_0
 func init() {
 	Profile["/tosca/implicit/2.0/js/constraints/_format.js"] = `
 
-function validate(v, format) {
+exports.validate = function(v, format) {
 	if (arguments.length !== 2)
 		throw 'must have 1 argument';
 	if (!puccini.isType(v, 'ard.string'))
@@ -20,5 +20,5 @@ function validate(v, format) {
 			throw x;
 	}
 	return true;
-}`
+};`
 }

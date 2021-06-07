@@ -1,7 +1,9 @@
 package js
 
 import (
-	"github.com/dop251/goja"
+	"fmt"
+
+	"github.com/tliron/kutil/js"
 	cloutpkg "github.com/tliron/puccini/clout"
 )
 
@@ -10,68 +12,27 @@ import (
 //
 
 type CloutContext struct {
-	Context *Context
-	Clout   *cloutpkg.Clout
-	Runtime *goja.Runtime
+	Context   *Context
+	Clout     *cloutpkg.Clout
+	JSContext *js.Context
 }
 
-func (self *Context) NewCloutContext(clout *cloutpkg.Clout, runtime *goja.Runtime) *CloutContext {
+func (self *Context) NewCloutContext(clout *cloutpkg.Clout, jsContext *js.Context) *CloutContext {
 	return &CloutContext{
-		Context: self,
-		Clout:   clout,
-		Runtime: runtime,
+		Context:   self,
+		Clout:     clout,
+		JSContext: jsContext,
 	}
-}
-
-func (self *CloutContext) Exec(scriptletName string) error {
-	scriptlet, err := GetScriptlet(scriptletName, self.Clout)
-	if err != nil {
-		return err
-	}
-
-	program, err := self.Context.GetProgram(scriptletName, scriptlet)
-	if err != nil {
-		return err
-	}
-
-	_, err = self.Runtime.RunProgram(program)
-
-	return UnwrapException(err)
-}
-
-func (self *CloutContext) ExecAll(scriptletBaseName string) error {
-	if scriptletNames, err := GetScriptletNamesInSection(scriptletBaseName, self.Clout); err == nil {
-		for _, scriptletName := range scriptletNames {
-			if err := self.Exec(scriptletName); err != nil {
-				return err
-			}
-		}
-	}
-
-	return nil
-}
-
-func (self *CloutContext) NewRuntime(apis map[string]interface{}) *goja.Runtime {
-	return self.Context.NewCloutRuntime(self.Clout, apis)
 }
 
 func (self *CloutContext) CallFunction(scriptletName string, functionName string, arguments []interface{}, functionCallContext FunctionCallContext) (interface{}, error) {
-	scriptlet, err := GetScriptlet(scriptletName, self.Clout)
-	if err != nil {
+	if exports, err := self.JSContext.Environment.RequireID(scriptletName); err == nil {
+		if function := exports.Get(functionName); function != nil {
+			return CallFunction(self.JSContext.Environment.Runtime, function, functionCallContext, arguments)
+		} else {
+			return nil, fmt.Errorf("function not exported from module: %s", functionName)
+		}
+	} else {
 		return nil, err
 	}
-
-	program, err := self.Context.GetProgram(scriptletName, scriptlet)
-	if err != nil {
-		return nil, err
-	}
-
-	runtime := self.NewRuntime(functionCallContext.API())
-
-	_, err = runtime.RunProgram(program)
-	if err != nil {
-		return nil, UnwrapException(err)
-	}
-
-	return CallFunction(runtime, functionName, arguments)
 }

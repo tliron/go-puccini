@@ -1,9 +1,9 @@
 
 // [https://docs.openstack.org/heat/wallaby/template_guide/hot_spec.html#get_param]
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-function evaluate(input) {
+exports.evaluate = function(input) {
 	if (arguments.length !== 1)
 		throw 'must have 1 argument';
 	if (!tosca.isTosca(clout))
@@ -14,4 +14,4 @@ function evaluate(input) {
 	var r = inputs[input];
 	r = clout.coerce(r);
 	return r;
-}
+};

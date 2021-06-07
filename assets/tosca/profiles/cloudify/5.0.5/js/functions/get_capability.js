@@ -1,6 +1,6 @@
 
 // [https://docs.cloudify.co/5.0.5/developer/blueprints/spec-intrinsic-functions/]
 
-function evaluate() {
+exports.evaluate = function() {
 	return 'TODO';
-}
+};

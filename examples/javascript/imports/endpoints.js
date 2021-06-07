@@ -1,11 +1,10 @@
 // This scriptlet gathers all endpoint capabilities and generates a report
 
-// "clout.exec" is used to execute other scriptlets in the Clout file
-// (it's essentially like an import)
-clout.exec('tosca.lib.traversal');
+traversal = require('tosca.lib.traversal');
+tosca = require('tosca.lib.utils');
 
-// "tosca.coerce" calls all intrinsic functions and validates all constraints
-tosca.coerce();
+// "traversal.coerce" calls all intrinsic functions and validates all constraints
+traversal.coerce();
 
 var endpoints = [];
 

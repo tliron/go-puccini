@@ -1,6 +1,6 @@
 
 // [https://docs.openstack.org/heat/wallaby/template_guide/hot_spec.html#str_split]
 
-function evaluate() {
+exports.evaluate = function() {
 	return 'TODO';
-}
+};

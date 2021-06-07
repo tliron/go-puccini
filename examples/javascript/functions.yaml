@@ -12,16 +12,16 @@ metadata:
 
   # Use metadata prefixed with "puccini.scriptlet:tosca.function."
   # The postfix is the function name
-  # Your scriptlet must provide a global function named "evaluate"
+  # Your scriptlet must export a function named "evaluate"
   # It can have any number of arguments
   puccini.scriptlet:tosca.function.in_bed: |-
-    function evaluate() {
+    exports.evaluate = function() {
       var a = [];
       for (var i in arguments) {
         a.push(arguments[i] + ' in bed');
       }
       return a.join('; ');
-    }
+    };
 
   # You can also use "puccini.scriptlet.import:function." if you prefer to import the scriptlet from a separate file
   puccini.scriptlet.import:tosca.function.double: imports/double.js

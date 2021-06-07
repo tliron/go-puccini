@@ -4,7 +4,7 @@
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 3.5.2
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.5.2
 
-function validate(v) {
+exports.validate = function(v) {
 	var values = Array.prototype.slice.call(arguments, 1);
 	return values.indexOf(v) !== -1;
-}
+};

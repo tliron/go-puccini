@@ -10,10 +10,10 @@ func init() {
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 4.4.2
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 4.4.2
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-function evaluate() {
-	return tosca.getNestedValue('property', 'properties', arguments);
-}
+exports.evaluate = function() {
+	return tosca.getNestedValue.call(this, 'property', 'properties', arguments);
+};
 `
 }

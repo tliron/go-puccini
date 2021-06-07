@@ -1,7 +1,8 @@
 
-clout.exec('tosca.lib.traversal');
-
-tosca.coerce();
+const traversal = require('tosca.lib.traversal');
+const tosca = require('tosca.lib.utils');
+puccini.log.infof('%v', traversal)
+traversal.coerce();
 
 // From: cdnjs.com
 var jQueryVersion = '3.6.0';

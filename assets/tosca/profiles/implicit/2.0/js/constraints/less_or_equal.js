@@ -4,10 +4,10 @@
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 3.5.2
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.5.2
 
-clout.exec('tosca.lib.utils');
+const tosca = require('tosca.lib.utils');
 
-function validate(v1, v2) {
+exports.validate = function(v1, v2) {
 	if (arguments.length !== 2)
 		throw 'must have 1 argument';
 	return tosca.compare(v1, v2) <= 0;
-}
+};

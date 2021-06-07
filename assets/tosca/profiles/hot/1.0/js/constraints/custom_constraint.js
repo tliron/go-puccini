@@ -1,7 +1,5 @@
 
-clout.exec('tosca.lib.utils');
-
-function validate() {
+exports.validate = function() {
 	// TODO
 	return true;
-}
+};

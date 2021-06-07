@@ -1,3 +1,4 @@
 
-function compare(a, b) {
-}
+exports.compare = function(a, b) {
+    // TODO
+};

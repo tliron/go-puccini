@@ -8,6 +8,7 @@ import (
 	"github.com/dop251/goja"
 	"github.com/fxamacker/cbor/v2"
 	"github.com/tliron/kutil/ard"
+	"github.com/tliron/kutil/js"
 	cloutpkg "github.com/tliron/puccini/clout"
 )
 
@@ -21,10 +22,10 @@ type CloutAPI struct {
 	cloutContext *CloutContext
 }
 
-func (self *Context) NewCloutAPI(clout *cloutpkg.Clout, runtime *goja.Runtime) *CloutAPI {
+func (self *Context) NewCloutAPI(clout *cloutpkg.Clout, jsContext *js.Context) *CloutAPI {
 	return &CloutAPI{
 		clout,
-		self.NewCloutContext(clout, runtime),
+		self.NewCloutContext(clout, jsContext),
 	}
 }
 
@@ -47,19 +48,11 @@ func (self *CloutAPI) Load(data interface{}) (*CloutAPI, error) {
 		return nil, fmt.Errorf("not a URL or clout data: %T", data)
 	}
 
-	return self.cloutContext.Context.NewCloutAPI(clout, self.cloutContext.Runtime), nil
+	return self.cloutContext.Context.NewCloutAPI(clout, self.cloutContext.JSContext), nil
 }
 
 func (self *CloutAPI) NewKey() string {
 	return cloutpkg.NewKey()
-}
-
-func (self *CloutAPI) Exec(scriptletName string) error {
-	return self.cloutContext.Exec(scriptletName)
-}
-
-func (self *CloutAPI) ExecAll(scriptletBaseName string) error {
-	return self.cloutContext.ExecAll(scriptletBaseName)
 }
 
 func (self *CloutAPI) Call(scriptletName string, functionName string, arguments []interface{}) (interface{}, error) {

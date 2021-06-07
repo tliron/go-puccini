@@ -5,11 +5,9 @@ package v1_0
 func init() {
 	Profile["/hot/1.0/js/constraints/custom_constraint.js"] = `
 
-clout.exec('tosca.lib.utils');
-
-function validate() {
+exports.validate = function() {
 	// TODO
 	return true;
-}
+};
 `
 }
