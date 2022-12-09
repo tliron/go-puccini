@@ -142,3 +142,9 @@ func (self OperationAssignments) Normalize(normalInterface *normal.Interface) {
 		normalInterface.Operations[key] = operation.Normalize(normalInterface)
 	}
 }
+
+func (self OperationAssignments) RenderForNodeTemplate(nodeTemplate *NodeTemplate, definitions OperationDefinitions, context *tosca.Context) {
+	for _, assignment := range self {
+		assignment.Outputs.RenderForNodeTemplate(nodeTemplate)
+	}
+}
