@@ -335,14 +335,14 @@ function isMaxCountGreater(a, b) {
 
 function unsatisfied(location, name, message) {
 	if (typeof problems === 'undefined')
-		throw puccini.sprintf('%s: could not satisfy %q because %s', location.path, name, message);
+		throw util.sprintf('%s: could not satisfy %q because %s', location.path, name, message);
 	else
-		problems.reportFull(11, 'Resolution', location.path, puccini.sprintf('could not satisfy %q because %s', name, message), location.row, location.column);
+		problems.reportFull(11, 'Resolution', location.path, util.sprintf('could not satisfy %q because %s', name, message), location.row, location.column);
 }
 
 function notEnoughRelationships(location, relationshipCount, minRelationshipCount) {
 	if (typeof problems === 'undefined')
-		throw puccini.sprintf('%s: not enough relationships: %d < %d', location.path, relationshipCount, minRelationshipCount);
+		throw util.sprintf('%s: not enough relationships: %d < %d', location.path, relationshipCount, minRelationshipCount);
 	else
-		problems.reportFull(11, 'Resolution', location.path, puccini.sprintf('not enough relationships: %d < %d', relationshipCount, minRelationshipCount), location.row, location.column);
+		problems.reportFull(11, 'Resolution', location.path, util.sprintf('not enough relationships: %d < %d', relationshipCount, minRelationshipCount), location.row, location.column);
 }

@@ -13,7 +13,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.5.14
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceDefinition(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("OperationDefinitions", "?,OperationDefinition")
 	context.SetReadTag("NotificationDefinitions", "")

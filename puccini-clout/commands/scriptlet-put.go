@@ -2,11 +2,9 @@ package commands
 
 import (
 	contextpkg "context"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/tliron/exturl"
-	"github.com/tliron/go-transcribe"
 	"github.com/tliron/kutil/util"
 	"github.com/tliron/puccini/clout/js"
 )
@@ -45,7 +43,7 @@ var putCommand = &cobra.Command{
 		err = js.SetScriptlet(scriptletName, js.CleanupScriptlet(scriptlet), clout)
 		util.FailOnError(err)
 
-		err = transcribe.WriteOrPrint(clout, format, os.Stdout, strict, pretty, false, output, nil)
+		err = Transcriber().Write(clout)
 		util.FailOnError(err)
 	},
 }

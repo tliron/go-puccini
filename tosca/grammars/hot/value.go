@@ -28,13 +28,13 @@ func NewValue(context *parsing.Context) *Value {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadValue(context *parsing.Context) parsing.EntityPtr {
 	ParseFunctionCalls(context)
 	return NewValue(context)
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *Value) GetKey() string {
 	return self.Name
 }

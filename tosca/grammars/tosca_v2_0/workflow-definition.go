@@ -34,20 +34,21 @@ func NewWorkflowDefinition(context *parsing.Context) *WorkflowDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflowDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewWorkflowDefinition(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *WorkflowDefinition) GetKey() string {
 	return self.Name
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *WorkflowDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

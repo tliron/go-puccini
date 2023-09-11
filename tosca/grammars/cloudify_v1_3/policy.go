@@ -31,7 +31,7 @@ func NewPolicy(context *parsing.Context) *Policy {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPolicy(context *parsing.Context) parsing.EntityPtr {
 	self := NewPolicy(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

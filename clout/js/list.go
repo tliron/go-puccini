@@ -1,8 +1,29 @@
 package js
 
 import (
+	"fmt"
+
 	"github.com/tliron/go-ard"
 )
+
+func (self *ExecutionContext) NewListValue(list ard.List, notation ard.StringMap, meta ard.StringMap) (*Value, error) {
+	var elementMeta ard.StringMap
+	if meta != nil {
+		if data, ok := meta["element"]; ok {
+			if map_, ok := data.(ard.StringMap); ok {
+				elementMeta = map_
+			} else {
+				return nil, fmt.Errorf("malformed meta \"element\", not a map: %T", data)
+			}
+		}
+	}
+
+	if list_, err := self.NewList(list, elementMeta); err == nil {
+		return self.NewValue(list_, notation, meta)
+	} else {
+		return nil, err
+	}
+}
 
 //
 // List

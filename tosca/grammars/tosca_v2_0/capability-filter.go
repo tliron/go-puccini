@@ -29,7 +29,7 @@ func NewCapabilityFilter(context *parsing.Context) *CapabilityFilter {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadCapabilityFilter(context *parsing.Context) parsing.EntityPtr {
 	self := NewCapabilityFilter(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

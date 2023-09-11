@@ -34,7 +34,7 @@ func ParseVersion(value string) (*Version, error) {
 	return &Version{major, minor}, nil
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *Version) String() string {
 	return fmt.Sprintf("%d.%d", self.Major, self.Minor)
 }

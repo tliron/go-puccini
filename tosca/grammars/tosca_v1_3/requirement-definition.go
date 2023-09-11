@@ -15,7 +15,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.6.2
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRequirementDefinition(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("CountRange", "occurrences,RangeEntity")
 

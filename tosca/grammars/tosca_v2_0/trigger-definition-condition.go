@@ -22,7 +22,7 @@ func NewTriggerDefinitionCondition(context *parsing.Context) *TriggerDefinitionC
 	return &TriggerDefinitionCondition{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadTriggerDefinitionCondition(context *parsing.Context) parsing.EntityPtr {
 	self := NewTriggerDefinitionCondition(context)
 
@@ -45,8 +45,9 @@ func ReadTriggerDefinitionCondition(context *parsing.Context) parsing.EntityPtr 
 	return self
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *TriggerDefinitionCondition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

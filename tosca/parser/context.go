@@ -86,6 +86,6 @@ func (self *Context) AddImportFile(context contextpkg.Context, entityPtr parsing
 
 func (self *Context) PrintImports(indent int) {
 	terminal.PrintIndent(indent)
-	terminal.Printf("%s\n", terminal.DefaultStylist.Value(self.Root.GetContext().URL.String()))
+	terminal.Printf("%s\n", terminal.StdoutStylist.Value(self.Root.GetContext().URL.String()))
 	self.Root.PrintImports(indent, terminal.TreePrefix{})
 }

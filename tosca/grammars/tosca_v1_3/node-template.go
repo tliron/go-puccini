@@ -14,7 +14,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.7.3
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNodeTemplate(context *parsing.Context) parsing.EntityPtr {
 	self := tosca_v2_0.NewNodeTemplate(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

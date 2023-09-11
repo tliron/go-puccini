@@ -60,7 +60,7 @@ func NewConstraintClause(context *parsing.Context) *ConstraintClause {
 	return &ConstraintClause{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadConstraintClause(context *parsing.Context) parsing.EntityPtr {
 	self := NewConstraintClause(context)
 
@@ -150,16 +150,8 @@ func (self *ConstraintClause) IsNativeArgument(index int) bool {
 type ConstraintClauses []*ConstraintClause
 
 func (self ConstraintClauses) Append(constraints ConstraintClauses) ConstraintClauses {
-	length := len(self)
-	if length > 0 {
-		r := make(ConstraintClauses, length)
-		copy(r, self)
-		return append(r, constraints...)
-	} else {
-		r := make(ConstraintClauses, len(constraints))
-		copy(r, constraints)
-		return r
-	}
+	r := append(self[:0:0], self...)
+	return append(r, constraints...)
 }
 
 func (self ConstraintClauses) Normalize(context *parsing.Context) normal.FunctionCalls {

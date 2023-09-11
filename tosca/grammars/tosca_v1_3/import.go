@@ -15,7 +15,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.5.7
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadImport(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("URL", "file")
 	context.SetReadTag("Namespace", "namespace_prefix")

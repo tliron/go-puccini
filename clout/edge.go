@@ -5,7 +5,6 @@ import (
 
 	"github.com/fxamacker/cbor/v2"
 	"github.com/tliron/go-ard"
-	"github.com/tliron/kutil/util"
 	"github.com/vmihailenco/msgpack/v5"
 )
 
@@ -127,7 +126,7 @@ func (self *Edge) MarshalMsgpack() ([]byte, error) {
 
 // ([ard.ToARD] interface)
 func (self *Edge) ToARD(reflector *ard.Reflector) (any, error) {
-	return reflector.Unpack(self.Marshalable(false), false)
+	return reflector.Unpack(self.Marshalable(false))
 }
 
 // json.Unmarshaler interface
@@ -154,7 +153,7 @@ func (self *Edge) UnmarshalCBOR(data []byte) error {
 // msgpack.Unmarshaler interface
 func (self *Edge) UnmarshalMsgpack(data []byte) error {
 	return self.Unmarshal(func(m *MarshalableEdge) error {
-		return util.UnmarshalMessagePack(data, m)
+		return ard.UnmarshalMessagePack(data, m)
 	})
 }
 

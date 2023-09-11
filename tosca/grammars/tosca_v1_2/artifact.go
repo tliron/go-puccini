@@ -9,7 +9,7 @@ import (
 // Artifact
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadArtifact(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("ArtifactVersion", "")
 	context.SetReadTag("ChecksumAlgorithm", "")

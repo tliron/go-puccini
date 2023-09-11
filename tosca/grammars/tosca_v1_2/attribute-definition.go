@@ -13,7 +13,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 3.5.10
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadAttributeDefinition(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Metadata", "")
 	context.SetReadTag("KeySchema", "")

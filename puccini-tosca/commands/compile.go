@@ -2,11 +2,9 @@ package commands
 
 import (
 	contextpkg "context"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/tliron/exturl"
-	"github.com/tliron/go-transcribe"
 	"github.com/tliron/kutil/terminal"
 	"github.com/tliron/kutil/util"
 	cloutpkg "github.com/tliron/puccini/clout"
@@ -88,7 +86,7 @@ func Compile(context contextpkg.Context, url string) {
 		err = Exec(context, exec, arguments, clout, urlContext)
 		util.FailOnError(err)
 	} else if !terminal.Quiet || (output != "") {
-		err = transcribe.WriteOrPrint(clout, format, os.Stdout, strict, pretty, false, output, nil)
+		err = Transcriber().Write(clout)
 		util.FailOnError(err)
 	}
 }
@@ -109,7 +107,7 @@ func Exec(context contextpkg.Context, scriptletName string, arguments map[string
 		util.FailOnError(err)
 	}
 
-	jsContext := js.NewContext(scriptletName, log, arguments, terminal.Quiet, format, strict, pretty, false, output, urlContext)
-	_, err = jsContext.Require(clout, scriptletName, nil)
+	environment := js.NewEnvironment(scriptletName, log, arguments, terminal.Quiet, format, strict, pretty, false, output, urlContext)
+	_, err = environment.Require(clout, scriptletName, nil)
 	return err
 }

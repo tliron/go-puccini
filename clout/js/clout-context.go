@@ -10,12 +10,12 @@ import (
 //
 
 type CloutContext struct {
-	Context   *Context
+	Context   *Environment
 	Clout     *cloutpkg.Clout
 	JSContext *commonjs.Context
 }
 
-func (self *Context) NewCloutContext(clout *cloutpkg.Clout, jsContext *commonjs.Context) *CloutContext {
+func (self *Environment) NewCloutContext(clout *cloutpkg.Clout, jsContext *commonjs.Context) *CloutContext {
 	return &CloutContext{
 		Context:   self,
 		Clout:     clout,

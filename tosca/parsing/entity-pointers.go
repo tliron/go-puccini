@@ -16,17 +16,17 @@ type EntityPtr = any
 
 type EntityPtrs []EntityPtr
 
-// sort.Interface
+// ([sort.Interface])
 func (self EntityPtrs) Len() int {
 	return len(self)
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self EntityPtrs) Swap(i, j int) {
 	self[i], self[j] = self[j], self[i]
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self EntityPtrs) Less(i, j int) bool {
 	iName := GetContext(self[i]).Path.String()
 	jName := GetContext(self[j]).Path.String()

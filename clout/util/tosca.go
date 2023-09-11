@@ -27,7 +27,7 @@ func IsTosca(metadata ard.Value, kind string) bool {
 }
 
 func IsToscaType(entity ard.Value, type_ string) bool {
-	if types, ok := ard.NewNode(entity).Get("types").StringMap(); ok {
+	if types, ok := ard.With(entity).Get("types").StringMap(); ok {
 		if _, ok := types[type_]; ok {
 			return true
 		}
@@ -53,7 +53,7 @@ func GetToscaNodeTemplates(clout *cloutpkg.Clout, type_ string) cloutpkg.Vertexe
 
 func GetToscaCapabilities(vertex *cloutpkg.Vertex, type_ string) ard.StringMap {
 	capabilities := make(ard.StringMap)
-	if capabilities_, ok := ard.NewNode(vertex.Properties).Get("capabilities").StringMap(); ok {
+	if capabilities_, ok := ard.With(vertex.Properties).Get("capabilities").StringMap(); ok {
 		for name, capability := range capabilities_ {
 			ok := true
 			if type_ != "" {
@@ -84,6 +84,6 @@ func GetToscaRelationships(vertex *cloutpkg.Vertex, type_ string) cloutpkg.Edges
 }
 
 func GetToscaOutputs(properties ard.Value) (ard.StringMap, bool) {
-	outputs, ok := ard.NewNode(properties).Get("tosca", "outputs").StringMap()
+	outputs, ok := ard.With(properties).Get("tosca", "outputs").StringMap()
 	return outputs, ok
 }

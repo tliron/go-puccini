@@ -33,7 +33,7 @@ func NewPlugin(context *parsing.Context) *Plugin {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPlugin(context *parsing.Context) parsing.EntityPtr {
 	self := NewPlugin(context)
 

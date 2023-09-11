@@ -33,7 +33,7 @@ func NewAttributeMapping(context *parsing.Context) *AttributeMapping {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadAttributeMapping(context *parsing.Context) parsing.EntityPtr {
 	self := NewAttributeMapping(context)
 
@@ -45,7 +45,7 @@ func ReadAttributeMapping(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *AttributeMapping) GetKey() string {
 	return self.Name
 }

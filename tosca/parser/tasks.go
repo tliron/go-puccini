@@ -52,7 +52,7 @@ func (self *Task) Done() {
 
 func (self *Task) Print(indent int) {
 	terminal.PrintIndent(indent)
-	terminal.Printf("%s\n", terminal.DefaultStylist.Path(self.Name))
+	terminal.Printf("%s\n", terminal.StdoutStylist.Path(self.Name))
 	self.PrintDependencies(indent, terminal.TreePrefix{})
 }
 
@@ -149,17 +149,17 @@ func (self Tasks) Print(indent int) {
 
 type TaskList []*Task
 
-// sort.Interface
+// ([sort.Interface])
 func (self TaskList) Len() int {
 	return len(self)
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self TaskList) Swap(i, j int) {
 	self[i], self[j] = self[j], self[i]
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self TaskList) Less(i, j int) bool {
 	return strings.Compare(self[i].Name, self[j].Name) < 0
 }

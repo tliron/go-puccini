@@ -24,7 +24,7 @@ func NewArtifact(context *parsing.Context) *Artifact {
 	return &Artifact{ArtifactDefinition: NewArtifactDefinition(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadArtifact(context *parsing.Context) parsing.EntityPtr {
 	self := NewArtifact(context)
 	self.ArtifactDefinition = ReadArtifactDefinition(context).(*ArtifactDefinition)

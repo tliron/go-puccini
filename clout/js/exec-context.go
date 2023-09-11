@@ -22,12 +22,12 @@ type ExecContext struct {
 	Base64     bool
 }
 
-func (self *ExecContext) NewContext(scriptletName string, arguments map[string]string) *Context {
-	return NewContext(scriptletName, log, arguments, true, self.Format, self.Strict, self.Pretty, self.Base64, "", self.URLContext)
+func (self *ExecContext) NewEnvironment(scriptletName string, arguments map[string]string) *Environment {
+	return NewEnvironment(scriptletName, log, arguments, true, self.Format, self.Strict, self.Pretty, self.Base64, "", self.URLContext)
 }
 
 func (self *ExecContext) Exec(scriptletName string, arguments map[string]string) *goja.Object {
-	context := self.NewContext(scriptletName, arguments)
+	context := self.NewEnvironment(scriptletName, arguments)
 	if r, err := context.Require(self.Clout, scriptletName, map[string]any{"problems": self.Problems}); err == nil {
 		return r
 	} else {

@@ -27,14 +27,14 @@ func NewValueDefinition(context *parsing.Context) *ValueDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadValueDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewValueDefinition(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *ValueDefinition) GetKey() string {
 	return self.Name
 }

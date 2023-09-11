@@ -40,19 +40,19 @@ func NewDataType(context *parsing.Context) *DataType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadDataType(context *parsing.Context) parsing.EntityPtr {
 	self := NewDataType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *DataType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *DataType) Inherit() {
 	logInherit.Debugf("data type: %s", self.Name)
 
@@ -80,8 +80,9 @@ func (self *DataType) Inherit() {
 	self.PropertyDefinitions.Inherit(self.Parent.PropertyDefinitions)
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *DataType) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

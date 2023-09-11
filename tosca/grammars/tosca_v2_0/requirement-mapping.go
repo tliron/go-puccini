@@ -36,7 +36,7 @@ func NewRequirementMapping(context *parsing.Context) *RequirementMapping {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRequirementMapping(context *parsing.Context) parsing.EntityPtr {
 	self := NewRequirementMapping(context)
 
@@ -48,7 +48,7 @@ func ReadRequirementMapping(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *RequirementMapping) GetKey() string {
 	return self.Name
 }
@@ -61,8 +61,9 @@ func (self *RequirementMapping) GetRequirementDefinition() (*RequirementDefiniti
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *RequirementMapping) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

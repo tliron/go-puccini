@@ -41,24 +41,24 @@ func NewRelationshipTemplate(context *parsing.Context) *RelationshipTemplate {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRelationshipTemplate(context *parsing.Context) parsing.EntityPtr {
 	self := NewRelationshipTemplate(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// tosca.PreReadable interface
+// ([parsing.PreReadable] interface)
 func (self *RelationshipTemplate) PreRead() {
 	CopyTemplate(self.Context)
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *RelationshipTemplate) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 
-// Avoid rendering more than once (can happen if we were called from RelationshipAssignment.Render)
 func (self *RelationshipTemplate) render() {
 	logRender.Debugf("relationship template: %s", self.Name)
 

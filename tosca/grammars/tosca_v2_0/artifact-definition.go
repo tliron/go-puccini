@@ -52,7 +52,7 @@ func NewArtifactDefinition(context *parsing.Context) *ArtifactDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadArtifactDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewArtifactDefinition(context)
 
@@ -108,7 +108,7 @@ func (self *ArtifactDefinition) GetExtension() string {
 	}
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *ArtifactDefinition) GetKey() string {
 	return self.Name
 }

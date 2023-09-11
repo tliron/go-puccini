@@ -28,13 +28,13 @@ func NewValue(context *parsing.Context) *Value {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadValue(context *parsing.Context) parsing.EntityPtr {
 	ParseFunctionCalls(context)
 	return NewValue(context)
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *Value) GetKey() string {
 	return self.Name
 }
@@ -47,7 +47,6 @@ func (self *Value) RenderProperty(dataType *DataType, definition *PropertyDefini
 	}
 }
 
-// Avoid rendering more than once (can happen if we use the "default" value)
 func (self *Value) RenderParameter(dataType *DataType, definition *ParameterDefinition, validateRequire bool, allowNil bool) {
 	if dataType != nil {
 		self.Meta = dataType.NewValueMeta()

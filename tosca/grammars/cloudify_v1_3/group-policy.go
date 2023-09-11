@@ -28,7 +28,7 @@ func NewGroupPolicy(context *parsing.Context) *GroupPolicy {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadGroupPolicy(context *parsing.Context) parsing.EntityPtr {
 	self := NewGroupPolicy(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

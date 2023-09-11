@@ -26,7 +26,7 @@ func NewPolicyTriggerType(context *parsing.Context) *PolicyTriggerType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPolicyTriggerType(context *parsing.Context) parsing.EntityPtr {
 	self := NewPolicyTriggerType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
@@ -35,7 +35,7 @@ func ReadPolicyTriggerType(context *parsing.Context) parsing.EntityPtr {
 
 var policyTriggerTypeRoot *PolicyTriggerType
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *PolicyTriggerType) GetParent() parsing.EntityPtr {
 	return policyTriggerTypeRoot
 }

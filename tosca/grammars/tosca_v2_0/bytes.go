@@ -17,7 +17,7 @@ type Bytes struct {
 	Bytes []byte `json:"bytes" yaml:"bytes"`
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadBytes(context *parsing.Context) parsing.EntityPtr {
 	var self Bytes
 

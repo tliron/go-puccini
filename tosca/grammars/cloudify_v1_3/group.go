@@ -29,7 +29,7 @@ func NewGroup(context *parsing.Context) *Group {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadGroup(context *parsing.Context) parsing.EntityPtr {
 	self := NewGroup(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

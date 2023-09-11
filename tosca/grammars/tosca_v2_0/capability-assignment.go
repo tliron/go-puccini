@@ -35,14 +35,14 @@ func NewCapabilityAssignment(context *parsing.Context) *CapabilityAssignment {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadCapabilityAssignment(context *parsing.Context) parsing.EntityPtr {
 	self := NewCapabilityAssignment(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *CapabilityAssignment) GetKey() string {
 	return self.Name
 }

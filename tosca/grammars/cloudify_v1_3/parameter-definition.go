@@ -27,14 +27,14 @@ func NewParameterDefinition(context *parsing.Context) *ParameterDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadParameterDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewParameterDefinition(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *ParameterDefinition) GetKey() string {
 	return self.Name
 }
@@ -62,7 +62,7 @@ func (self *ParameterDefinition) Inherit(parentDefinition *ParameterDefinition) 
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *ParameterDefinition) Render() {
 	self.renderOnce.Do(self.render)
 }

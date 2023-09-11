@@ -35,7 +35,7 @@ func NewInterfaceType(context *parsing.Context) *InterfaceType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceType(context *parsing.Context) parsing.EntityPtr {
 	self := NewInterfaceType(context)
 
@@ -52,12 +52,12 @@ func ReadInterfaceType(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *InterfaceType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *InterfaceType) Inherit() {
 	logInherit.Debugf("interface type: %s", self.Name)
 

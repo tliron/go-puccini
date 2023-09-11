@@ -123,7 +123,6 @@ func (self *Context) compile(url string, inputs map[string]any) {
 			URLContext: self.urlContext,
 			History:    true,
 			Format:     "yaml",
-			Strict:     false,
 			Pretty:     true,
 		}
 

@@ -26,7 +26,7 @@ func NewBlueprint(context *parsing.Context) *Blueprint {
 	return &Blueprint{File: NewFile(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadBlueprint(context *parsing.Context) parsing.EntityPtr {
 	self := NewBlueprint(context)
 	context.ScriptletNamespace.Merge(DefaultScriptletNamespace)

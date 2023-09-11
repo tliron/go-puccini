@@ -8,7 +8,7 @@ type Renderable interface {
 	Render()
 }
 
-// From Renderable interface
+// From [Renderable] interface
 func Render(entityPtr EntityPtr) bool {
 	if renderable, ok := entityPtr.(Renderable); ok {
 		renderable.Render()

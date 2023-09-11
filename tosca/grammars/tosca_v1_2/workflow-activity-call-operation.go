@@ -12,7 +12,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.1] @ 3.5.17.2.3
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflowActivityCallOperation(context *parsing.Context) parsing.EntityPtr {
 	self := tosca_v2_0.NewWorkflowActivityCallOperation(context)
 	self.InterfaceAndOperation = context.FieldChild("operation", context.Data).ReadString()

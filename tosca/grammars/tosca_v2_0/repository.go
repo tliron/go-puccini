@@ -34,7 +34,7 @@ func NewRepository(context *parsing.Context) *Repository {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRepository(context *parsing.Context) parsing.EntityPtr {
 	self := NewRepository(context)
 
@@ -49,8 +49,9 @@ func ReadRepository(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Repository) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

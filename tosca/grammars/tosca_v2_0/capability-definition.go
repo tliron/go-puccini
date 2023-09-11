@@ -41,7 +41,7 @@ func NewCapabilityDefinition(context *parsing.Context) *CapabilityDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadCapabilityDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewCapabilityDefinition(context)
 
@@ -56,7 +56,7 @@ func ReadCapabilityDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *CapabilityDefinition) GetKey() string {
 	return self.Name
 }
@@ -93,8 +93,9 @@ func (self *CapabilityDefinition) Inherit(parentDefinition *CapabilityDefinition
 	self.AttributeDefinitions.Inherit(parentDefinition.AttributeDefinitions)
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *CapabilityDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

@@ -21,7 +21,7 @@ func NewDSLResource(context *parsing.Context) *DSLResource {
 	return &DSLResource{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadDSLResource(context *parsing.Context) parsing.EntityPtr {
 	self := NewDSLResource(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

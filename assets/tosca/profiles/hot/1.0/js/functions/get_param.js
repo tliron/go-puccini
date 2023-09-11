@@ -10,7 +10,7 @@ exports.evaluate = function(input) {
 		throw 'Clout is not TOSCA';
 	let inputs = clout.properties.tosca.inputs;
 	if (!(input in inputs))
-		throw puccini.sprintf('parameter %q not found', input);
+		throw util.sprintf('parameter %q not found', input);
 	let r = inputs[input];
 	r = clout.coerce(r);
 	return r;

@@ -15,6 +15,12 @@ import (
 	"github.com/vmihailenco/msgpack/v5"
 )
 
+func (self *Environment) CreateCloutExtension(clout *cloutpkg.Clout) commonjs.CreateExtensionFunc {
+	return func(jsContext *commonjs.Context) any {
+		return self.NewCloutAPI(clout, jsContext)
+	}
+}
+
 //
 // CloutAPI
 //
@@ -25,7 +31,7 @@ type CloutAPI struct {
 	cloutContext *CloutContext
 }
 
-func (self *Context) NewCloutAPI(clout *cloutpkg.Clout, jsContext *commonjs.Context) *CloutAPI {
+func (self *Environment) NewCloutAPI(clout *cloutpkg.Clout, jsContext *commonjs.Context) *CloutAPI {
 	return &CloutAPI{
 		clout,
 		self.NewCloutContext(clout, jsContext),
@@ -66,7 +72,7 @@ func (self *CloutAPI) NewKey() string {
 
 func (self *CloutAPI) Call(scriptletName string, functionName string, arguments []any) (any, error) {
 	executionContext := self.cloutContext.NewExecutionContext(nil, nil, nil)
-	return executionContext.Call(scriptletName, functionName, arguments)
+	return executionContext.Call(scriptletName, functionName, arguments...)
 }
 
 // TODO: unused?

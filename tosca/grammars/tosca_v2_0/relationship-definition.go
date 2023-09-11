@@ -33,7 +33,7 @@ func NewRelationshipDefinition(context *parsing.Context) *RelationshipDefinition
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRelationshipDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewRelationshipDefinition(context)
 
@@ -74,8 +74,9 @@ func (self *RelationshipDefinition) Inherit(parentDefinition *RelationshipDefini
 	self.InterfaceDefinitions.Inherit(parentDefinition.InterfaceDefinitions)
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *RelationshipDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

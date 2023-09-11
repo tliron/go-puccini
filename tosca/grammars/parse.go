@@ -7,7 +7,7 @@ import (
 	"github.com/tliron/puccini/tosca/parsing"
 )
 
-func Detect(context *parsing.Context) bool {
+func DetectGrammar(context *parsing.Context) bool {
 	if context.Grammar == nil {
 		var errorContext *parsing.Context
 		if context.Grammar, errorContext = GetGrammar(context); errorContext != nil {
@@ -18,7 +18,7 @@ func Detect(context *parsing.Context) bool {
 }
 
 func GetGrammar(context *parsing.Context) (*parsing.Grammar, *parsing.Context) {
-	if versionContext, version := DetectVersion(context); version != nil {
+	if versionContext, version := DetectGrammarVersion(context); version != nil {
 		if grammars, ok := Grammars[versionContext.Name]; ok {
 			if grammar, ok := grammars[*version]; ok {
 				return grammar, nil
@@ -38,7 +38,7 @@ func CompatibleGrammars(context1 *parsing.Context, context2 *parsing.Context) bo
 	return grammar1 == grammar2
 }
 
-func DetectVersion(context *parsing.Context) (*parsing.Context, *string) {
+func DetectGrammarVersion(context *parsing.Context) (*parsing.Context, *string) {
 	var versionContext *parsing.Context
 	var ok bool
 
@@ -70,7 +70,7 @@ func DetectVersion(context *parsing.Context) (*parsing.Context, *string) {
 }
 
 func GetImplicitImportSpec(context *parsing.Context) (*parsing.ImportSpec, bool) {
-	if versionContext, version := DetectVersion(context); version != nil {
+	if versionContext, version := DetectGrammarVersion(context); version != nil {
 		if paths, ok := ImplicitProfilePaths[versionContext.Name]; ok {
 			if path, ok := paths[*version]; ok {
 				if url, err := context.URL.Context().NewValidInternalURL(path); err == nil {

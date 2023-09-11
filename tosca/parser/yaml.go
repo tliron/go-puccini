@@ -19,7 +19,7 @@ func NewYAMLDecodeError(decodeError *yamlkeys.DecodeError) *YAMLDecodeError {
 	return &YAMLDecodeError{decodeError}
 }
 
-// error interface
+// (error interface)
 func (self *YAMLDecodeError) Error() string {
 	return self.DecodeError.Error()
 }

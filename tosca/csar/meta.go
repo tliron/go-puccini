@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/tliron/commonlog"
 	"github.com/tliron/exturl"
 	"github.com/tliron/kutil/util"
 )
@@ -124,7 +125,7 @@ func ReadMetaFromURL(context contextpkg.Context, csarUrl exturl.URL, format stri
 	if url, err := NewURL(csarUrl, format, TOSCA_META_PATH); err == nil {
 		if reader, err := url.Open(context); err == nil {
 			reader = util.NewContextualReadCloser(context, reader)
-			defer reader.Close()
+			defer commonlog.CallAndLogWarning(reader.Close, "csar.ReadMetaFromURL", log)
 			return ReadMeta(reader)
 		} else {
 			return nil, err
@@ -134,7 +135,7 @@ func ReadMetaFromURL(context contextpkg.Context, csarUrl exturl.URL, format stri
 	}
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *Meta) String() string {
 	var builder strings.Builder
 	if err := self.Write(&builder); err == nil {

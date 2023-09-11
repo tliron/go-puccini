@@ -2,6 +2,7 @@ package normal
 
 import (
 	contextpkg "context"
+	"fmt"
 	"time"
 
 	"github.com/tliron/go-ard"
@@ -22,8 +23,8 @@ func (serviceTemplate *ServiceTemplate) Compile() (*cloutpkg.Clout, error) {
 	var err error = nil
 	serviceTemplate.ScriptletNamespace.Range(func(name string, scriptlet *parsing.Scriptlet) bool {
 		if scriptlet_, err_ := scriptlet.Read(contextpkg.TODO()); err_ == nil {
-			if err_ = ard.StringMapPutNested(scriptlets, name, js.CleanupScriptlet(scriptlet_)); err_ != nil {
-				err = err_
+			if !ard.With(scriptlets).ForceGetPath(name, ".").Set(js.CleanupScriptlet(scriptlet_)) {
+				err = fmt.Errorf("could not set scriptlet at path %q", name)
 				return false
 			}
 		} else {

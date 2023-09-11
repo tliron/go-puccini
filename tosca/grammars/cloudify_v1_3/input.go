@@ -25,7 +25,7 @@ func NewInput(context *parsing.Context) *Input {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInput(context *parsing.Context) parsing.EntityPtr {
 	self := NewInput(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
@@ -46,7 +46,7 @@ func (self *Input) Normalize(context *parsing.Context) normal.Value {
 	return value.Normalize()
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Input) Render() {
 	self.renderOnce.Do(self.render)
 }

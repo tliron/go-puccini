@@ -39,15 +39,16 @@ func NewGroup(context *parsing.Context) *Group {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadGroup(context *parsing.Context) parsing.EntityPtr {
 	self := NewGroup(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Group) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

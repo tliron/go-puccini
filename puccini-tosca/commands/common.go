@@ -24,16 +24,13 @@ var problemsFormat string
 var quirks []string
 var urlMappings map[string]string
 
-func FailOnProblems(problems *problemspkg.Problems) {
-	if !problems.Empty() {
-		if !terminal.Quiet {
-			if problemsFormat != "" {
-				transcribe.Print(problems, problemsFormat, os.Stderr, strict, pretty, false, nil)
-			} else {
-				problems.Print(verbose > 0)
-			}
-		}
-		util.Exit(1)
+func Transcriber() *transcribe.Transcriber {
+	return &transcribe.Transcriber{
+		File:        output,
+		Format:      format,
+		ForTerminal: pretty,
+		Strict:      strict,
+		Base64:      base64,
 	}
 }
 
@@ -51,4 +48,21 @@ func Bases(urlContext *exturl.Context, withImportPaths bool) []exturl.URL {
 	bases = append(bases, workingDir)
 
 	return bases
+}
+
+func FailOnProblems(problems *problemspkg.Problems) {
+	if !problems.Empty() {
+		if !terminal.Quiet {
+			if problemsFormat != "" {
+				transcriber := Transcriber().Clone()
+				transcriber.Writer = os.Stderr
+				transcriber.Format = problemsFormat
+
+				transcriber.Write(problems)
+			} else {
+				problems.Print(verbose > 0)
+			}
+		}
+		util.Exit(1)
+	}
 }

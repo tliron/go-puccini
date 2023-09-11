@@ -13,7 +13,7 @@ import (
 
 type Metadata map[string]string
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadMetadata(context *parsing.Context) parsing.EntityPtr {
 	var self Metadata
 

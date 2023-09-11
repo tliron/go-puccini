@@ -14,7 +14,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.7.2
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRequirementAssignment(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Count", "")
 	context.SetReadTag("Directives", "")

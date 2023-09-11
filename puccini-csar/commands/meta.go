@@ -2,11 +2,9 @@ package commands
 
 import (
 	contextpkg "context"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/tliron/exturl"
-	"github.com/tliron/go-transcribe"
 	"github.com/tliron/kutil/terminal"
 	"github.com/tliron/kutil/util"
 	"github.com/tliron/puccini/tosca/csar"
@@ -17,6 +15,7 @@ var format string
 var colorize string
 var strict bool
 var pretty bool
+var base64 bool
 
 func init() {
 	rootCommand.AddCommand(metaCommand)
@@ -27,6 +26,7 @@ func init() {
 	metaCommand.Flags().StringVarP(&colorize, "colorize", "z", "true", "colorize output (boolean or \"force\")")
 	metaCommand.Flags().BoolVarP(&strict, "strict", "y", false, "strict output (for \"yaml\" format only)")
 	metaCommand.Flags().BoolVarP(&pretty, "pretty", "p", true, "prettify output")
+	metaCommand.Flags().BoolVarP(&base64, "base64", "", false, "output base64 (for \"cbor\", \"messagepack\" formats)")
 }
 
 var metaCommand = &cobra.Command{
@@ -57,7 +57,7 @@ func Meta(url string) {
 	util.FailOnError(err)
 
 	if !terminal.Quiet || (output != "") {
-		err = transcribe.WriteOrPrint(meta, format, os.Stdout, strict, pretty, false, output, nil)
+		err = Transcriber().Write(meta)
 		util.FailOnError(err)
 	}
 }

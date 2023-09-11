@@ -34,7 +34,7 @@ func NewParameter(context *parsing.Context) *Parameter {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadParameter(context *parsing.Context) parsing.EntityPtr {
 	self := NewParameter(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
@@ -55,12 +55,12 @@ func ReadParameter(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *Parameter) GetKey() string {
 	return self.Name
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Parameter) Render() {
 	self.renderOnce.Do(self.render)
 }

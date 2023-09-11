@@ -45,7 +45,7 @@ func NewRequirementAssignment(context *parsing.Context) *RequirementAssignment {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRequirementAssignment(context *parsing.Context) parsing.EntityPtr {
 	self := NewRequirementAssignment(context)
 

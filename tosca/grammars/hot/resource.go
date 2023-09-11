@@ -52,7 +52,7 @@ func NewResource(context *parsing.Context) *Resource {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadResource(context *parsing.Context) parsing.EntityPtr {
 	self := NewResource(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

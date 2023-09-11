@@ -13,7 +13,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.7.5
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadGroup(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Interfaces", "interfaces,InterfaceAssignment")
 

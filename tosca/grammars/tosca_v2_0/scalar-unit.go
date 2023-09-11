@@ -80,7 +80,7 @@ func ReadScalarUnit(context *parsing.Context, name string, canonicalUnit string,
 	return &self
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *ScalarUnit) String() string {
 	var singular bool
 
@@ -161,7 +161,7 @@ var ScalarUnitSizeMeasures = ScalarUnitMeasures{
 	"TiB": 1099511627776,
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadScalarUnitSize(context *parsing.Context) parsing.EntityPtr {
 	return ReadScalarUnit(context, "scalar-unit.size", "B", "byte", "bytes", ScalarUnitSizeRE, ScalarUnitSizeMeasures, true, false)
 }
@@ -190,7 +190,7 @@ var ScalarUnitTimeMeasures = ScalarUnitMeasures{
 	"d":  86400,
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadScalarUnitTime(context *parsing.Context) parsing.EntityPtr {
 	return ReadScalarUnit(context, "scalar-unit.time", "s", "second", "seconds", ScalarUnitTimeRE, ScalarUnitTimeMeasures, false, false)
 }
@@ -216,7 +216,7 @@ var ScalarUnitFrequencyMeasures = ScalarUnitMeasures{
 	"GHz": 1_000_000_000,
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadScalarUnitFrequency(context *parsing.Context) parsing.EntityPtr {
 	return ReadScalarUnit(context, "scalar-unit.frequency", "Hz", "Hz", "Hz", ScalarUnitFrequencyRE, ScalarUnitFrequencyMeasures, false, false)
 }
@@ -254,7 +254,7 @@ var ScalarUnitBitrateMeasures = ScalarUnitMeasures{
 	"TiBps": 8796093022208,
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadScalarUnitBitrate(context *parsing.Context) parsing.EntityPtr {
 	return ReadScalarUnit(context, "scalar-unit.bitrate", "bps", "bps", "bps", ScalarUnitBitrateRE, ScalarUnitBitrateMeasures, false, true)
 }

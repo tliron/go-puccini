@@ -25,7 +25,7 @@ func NewParameterDefinition(context *parsing.Context) *ParameterDefinition {
 	return &ParameterDefinition{PropertyDefinition: NewPropertyDefinition(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadParameterDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewParameterDefinition(context)
 	self.looseType = true
@@ -47,8 +47,9 @@ func (self *ParameterDefinition) Inherit(parentDefinition *ParameterDefinition) 
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *ParameterDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

@@ -39,14 +39,14 @@ func NewWorkflowStepDefinition(context *parsing.Context) *WorkflowStepDefinition
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflowStepDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewWorkflowStepDefinition(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *WorkflowStepDefinition) GetKey() string {
 	return self.Name
 }

@@ -12,7 +12,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 2.10, 2.11
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadSubstitutionMappings(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("PropertyMappings", "")
 	context.SetReadTag("InterfaceMappings", "")

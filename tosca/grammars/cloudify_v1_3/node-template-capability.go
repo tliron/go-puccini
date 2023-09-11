@@ -24,7 +24,7 @@ func NewNodeTemplateCapability(context *parsing.Context) *NodeTemplateCapability
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNodeTemplateCapability(context *parsing.Context) parsing.EntityPtr {
 	self := NewNodeTemplateCapability(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

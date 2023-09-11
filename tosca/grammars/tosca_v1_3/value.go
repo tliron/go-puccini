@@ -6,7 +6,7 @@ import (
 	"github.com/tliron/puccini/tosca/parsing"
 )
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadAttributeValue(context *parsing.Context) parsing.EntityPtr {
 	self := tosca_v2_0.NewValue(context)
 

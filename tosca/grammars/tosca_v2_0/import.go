@@ -36,7 +36,7 @@ func NewImport(context *parsing.Context) *Import {
 	return &Import{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadImport(context *parsing.Context) parsing.EntityPtr {
 	self := NewImport(context)
 
