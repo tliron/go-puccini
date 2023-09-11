@@ -33,19 +33,19 @@ func NewCapabilityType(context *parsing.Context) *CapabilityType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadCapabilityType(context *parsing.Context) parsing.EntityPtr {
 	self := NewCapabilityType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *CapabilityType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *CapabilityType) Inherit() {
 	logInherit.Debugf("capability type: %s", self.Name)
 

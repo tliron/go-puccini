@@ -20,14 +20,14 @@ func NewPropertyDefinition(context *parsing.Context) *PropertyDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPropertyDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewPropertyDefinition(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *PropertyDefinition) GetKey() string {
 	return self.Name
 }

@@ -22,7 +22,7 @@ func NewEntity(context *parsing.Context) *Entity {
 	}
 }
 
-// parsing.Contextual interface
+// ([parsing.Contextual] interface)
 func (self *Entity) GetContext() *parsing.Context {
 	return self.Context
 }

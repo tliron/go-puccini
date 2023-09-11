@@ -40,7 +40,7 @@ func NewFile(context *parsing.Context) *File {
 	return &File{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadFile(context *parsing.Context) parsing.EntityPtr {
 	context.FunctionPrefix = "$"
 	self := NewFile(context)
@@ -59,7 +59,7 @@ func ReadFile(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Importer interface
+// ([parsing.Importer] interface)
 func (self *File) GetImportSpecs() []*parsing.ImportSpec {
 	// TODO: importing should also import repositories
 

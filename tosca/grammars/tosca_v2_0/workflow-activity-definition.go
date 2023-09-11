@@ -32,7 +32,7 @@ func NewWorkflowActivityDefinition(context *parsing.Context) *WorkflowActivityDe
 	return &WorkflowActivityDefinition{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflowActivityDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewWorkflowActivityDefinition(context)
 

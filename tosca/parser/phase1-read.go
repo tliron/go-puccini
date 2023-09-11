@@ -6,7 +6,6 @@ import (
 	"sort"
 
 	"github.com/tliron/exturl"
-	"github.com/tliron/go-ard"
 	"github.com/tliron/kutil/reflection"
 	"github.com/tliron/kutil/util"
 	"github.com/tliron/puccini/tosca/csar"
@@ -15,7 +14,7 @@ import (
 	"github.com/tliron/yamlkeys"
 )
 
-func (self *Context) ReadRoot(context contextpkg.Context, url exturl.URL, bases []exturl.URL, template string) bool {
+func (self *Context) ReadRoot(context contextpkg.Context, url exturl.URL, bases []exturl.URL, serviceTemplateName string) bool {
 	parsingContext := parsing.NewContext(self.Stylist, self.Quirks)
 	parsingContext.Bases = bases
 
@@ -24,7 +23,7 @@ func (self *Context) ReadRoot(context contextpkg.Context, url exturl.URL, bases 
 	var ok bool
 
 	self.readWork.Add(1)
-	self.Root, ok = self.read(context, nil, parsingContext, nil, nil, "$Root", template)
+	self.Root, ok = self.read(context, nil, parsingContext, nil, nil, "$Root", serviceTemplateName)
 	self.readWork.Wait()
 
 	self.filesLock.Lock()
@@ -56,7 +55,7 @@ func (self *Context) read(context contextpkg.Context, promise util.Promise, pars
 
 	// Read ARD
 	var err error
-	if parsingContext.Data, parsingContext.Locator, err = ard.ReadURL(context, parsingContext.URL, true); err != nil {
+	if parsingContext.Data, parsingContext.Locator, err = parsingContext.Read(context); err != nil {
 		if decodeError, ok := err.(*yamlkeys.DecodeError); ok {
 			err = NewYAMLDecodeError(decodeError)
 		}
@@ -67,7 +66,7 @@ func (self *Context) read(context contextpkg.Context, promise util.Promise, pars
 	}
 
 	// Detect grammar
-	if !grammars.Detect(parsingContext) {
+	if !grammars.DetectGrammar(parsingContext) {
 		file := NewEmptyFile(parsingContext, container, nameTransformer)
 		self.AddFile(file)
 		return file, false
@@ -92,7 +91,7 @@ func (self *Context) read(context contextpkg.Context, promise util.Promise, pars
 	return self.AddImportFile(context, entityPtr, container, nameTransformer), true
 }
 
-// From tosca.Importer interface
+// ([parsing.Importer] interface)
 func (self *Context) goReadImports(context contextpkg.Context, container *File) {
 	importSpecs := parsing.GetImportSpecs(container.EntityPtr)
 

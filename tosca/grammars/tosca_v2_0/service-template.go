@@ -39,7 +39,7 @@ func NewServiceTemplate(context *parsing.Context) *ServiceTemplate {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadServiceTemplate(context *parsing.Context) parsing.EntityPtr {
 	self := NewServiceTemplate(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
@@ -85,8 +85,9 @@ func (self *ServiceTemplate) SetInputs(inputs map[string]ard.Value) {
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *ServiceTemplate) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

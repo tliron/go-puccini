@@ -299,7 +299,7 @@ $(document).ready(function () {\n\
 </body>\n\
 </html>';
 
-let html = puccini.sprintf(
+let html = util.sprintf(
 	template,
 	jQueryVersion,
 	jQueryUiVersion, jQueryUiVersion,
@@ -310,4 +310,4 @@ let html = puccini.sprintf(
 	header
 );
 
-puccini.write(html);
+transcribe.output(html);

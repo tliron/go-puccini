@@ -26,7 +26,7 @@ func NewCondition(context *parsing.Context) *Condition {
 	return &Condition{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadCondition(context *parsing.Context) parsing.EntityPtr {
 	self := NewCondition(context)
 

@@ -30,7 +30,7 @@ func NewType(context *parsing.Context) *Type {
 	}
 }
 
-// tosca.HasMetadata interface
+// ([parsing.HasMetadata] interface)
 func (self *Type) GetDescription() (string, bool) {
 	if self.Description != nil {
 		return *self.Description, true
@@ -38,7 +38,7 @@ func (self *Type) GetDescription() (string, bool) {
 	return "", false
 }
 
-// tosca.HasMetadata interface
+// ([parsing.HasMetadata] interface)
 func (self *Type) GetMetadata() (map[string]string, bool) {
 	metadata := make(map[string]string)
 	if self.Metadata != nil {
@@ -49,14 +49,15 @@ func (self *Type) GetMetadata() (map[string]string, bool) {
 	return metadata, true
 }
 
-// tosca.HasMetadata interface
+// ([parsing.HasMetadata] interface)
 func (self *Type) SetMetadata(name string, value string) bool {
 	self.Metadata[name] = value
 	return true
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Type) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

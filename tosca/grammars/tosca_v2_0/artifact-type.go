@@ -31,19 +31,19 @@ func NewArtifactType(context *parsing.Context) *ArtifactType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadArtifactType(context *parsing.Context) parsing.EntityPtr {
 	self := NewArtifactType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *ArtifactType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *ArtifactType) Inherit() {
 	logInherit.Debugf("artifact type: %s", self.Name)
 

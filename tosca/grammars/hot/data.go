@@ -22,7 +22,7 @@ func NewData(context *parsing.Context) *Data {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadData(context *parsing.Context) parsing.EntityPtr {
 	return NewData(context)
 }

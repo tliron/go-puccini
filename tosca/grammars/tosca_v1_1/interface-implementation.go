@@ -12,7 +12,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.5.13.2.3
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceImplementation(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Timeout", "")
 	context.SetReadTag("OperationHost", "")

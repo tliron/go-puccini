@@ -40,7 +40,7 @@ func NewConstraint(context *parsing.Context) *Constraint {
 	return &Constraint{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadConstraint(context *parsing.Context) parsing.EntityPtr {
 	self := NewConstraint(context)
 

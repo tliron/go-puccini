@@ -29,7 +29,7 @@ func NewInterfaceImplementation(context *parsing.Context) *InterfaceImplementati
 	return &InterfaceImplementation{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceImplementation(context *parsing.Context) parsing.EntityPtr {
 	self := NewInterfaceImplementation(context)
 

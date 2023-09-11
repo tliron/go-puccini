@@ -31,7 +31,7 @@ func NewConditionClause(context *parsing.Context) *ConditionClause {
 	return &ConditionClause{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadConditionClause(context *parsing.Context) parsing.EntityPtr {
 	self := NewConditionClause(context)
 
@@ -88,7 +88,7 @@ func ReadConditionClause(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadConditionClauseAnd(context *parsing.Context) parsing.EntityPtr {
 	self := NewConditionClause(context)
 

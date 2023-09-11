@@ -30,7 +30,7 @@ func NewPropertyFilter(context *parsing.Context) *PropertyFilter {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPropertyFilter(context *parsing.Context) parsing.EntityPtr {
 	self := NewPropertyFilter(context)
 

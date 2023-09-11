@@ -40,7 +40,7 @@ func NewValue(context *parsing.Context) *Value {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadValue(context *parsing.Context) parsing.EntityPtr {
 	ParseFunctionCall(context)
 	return NewValue(context)
@@ -52,12 +52,12 @@ func ReadAndRenderBare(context *parsing.Context, dataType *DataType, definition 
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *Value) GetKey() string {
 	return self.Name
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *Value) String() string {
 	return yamlkeys.KeyString(self.Context.Data)
 }
@@ -75,7 +75,7 @@ func (self *Value) RenderDataType(dataTypeName string) {
 }
 
 func (self *Value) Render(dataType *DataType, dataDefinition DataDefinition, bare bool, allowNil bool) {
-	// Avoid rendering more than once (can happen if we were copied from PropertyDefinition.Default)
+	// Avoid rendering more than once
 	self.renderOnce.Do(func() {
 		self.render(dataType, dataDefinition, bare, allowNil)
 	})

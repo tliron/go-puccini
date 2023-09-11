@@ -2,13 +2,12 @@ package commands
 
 import (
 	contextpkg "context"
-	"os"
 	"sort"
 
 	"github.com/spf13/cobra"
+	"github.com/tliron/commonlog"
 	"github.com/tliron/exturl"
 	"github.com/tliron/go-ard"
-	"github.com/tliron/go-transcribe"
 	"github.com/tliron/kutil/terminal"
 	"github.com/tliron/kutil/util"
 	"github.com/tliron/puccini/normal"
@@ -69,10 +68,10 @@ var parseCommand = &cobra.Command{
 var parser = parserpkg.NewParser()
 
 func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.ServiceTemplate) {
-	ParseInputs(context)
-
 	urlContext := exturl.NewContext()
 	util.OnExitError(urlContext.Release)
+
+	ParseInputs(context, urlContext)
 
 	// URL mappings
 	for fromUrl, toUrl := range urlMappings {
@@ -92,7 +91,7 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 
 	parserContext := parser.NewContext()
 	parserContext.Quirks = parsing.NewQuirks(quirks...)
-	parserContext.Stylist = terminal.DefaultStylist
+	parserContext.Stylist = terminal.StdoutStylist
 	if problemsFormat != "" {
 		parserContext.Stylist = terminal.NewStylist(false)
 	}
@@ -115,7 +114,7 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 
 	if ToPrintPhase(1) {
 		if len(dumpPhases) > 1 {
-			terminal.Printf("%s\n", terminal.DefaultStylist.Heading("Imports"))
+			terminal.Printf("%s\n", terminal.StdoutStylist.Heading("Imports"))
 			parserContext.PrintImports(1)
 		} else {
 			parserContext.PrintImports(0)
@@ -131,7 +130,7 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 	parserContext.LookupNames()
 	if ToPrintPhase(2) {
 		if len(dumpPhases) > 1 {
-			terminal.Printf("%s\n", terminal.DefaultStylist.Heading("Namespaces"))
+			terminal.Printf("%s\n", terminal.StdoutStylist.Heading("Namespaces"))
 			parserContext.PrintNamespaces(1)
 		} else {
 			parserContext.PrintNamespaces(0)
@@ -146,7 +145,7 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 	parserContext.AddHierarchies()
 	if ToPrintPhase(3) {
 		if len(dumpPhases) > 1 {
-			terminal.Printf("%s\n", terminal.DefaultStylist.Heading("Hierarchies"))
+			terminal.Printf("%s\n", terminal.StdoutStylist.Heading("Hierarchies"))
 			parserContext.PrintHierarchies(1)
 		} else {
 			parserContext.PrintHierarchies(0)
@@ -161,7 +160,7 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 	if ToPrintPhase(4) {
 		parserContext.Inherit(func(tasks parserpkg.Tasks) {
 			if len(dumpPhases) > 1 {
-				terminal.Printf("%s\n", terminal.DefaultStylist.Heading("Inheritance Tasks"))
+				terminal.Printf("%s\n", terminal.StdoutStylist.Heading("Inheritance Tasks"))
 				tasks.Print(1)
 			} else {
 				tasks.Print(0)
@@ -186,11 +185,11 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 	if ToPrintPhase(5) {
 		sort.Sort(entityPtrs)
 		if len(dumpPhases) > 1 {
-			terminal.Printf("%s\n", terminal.DefaultStylist.Heading("Rendering"))
+			terminal.Printf("%s\n", terminal.StdoutStylist.Heading("Rendering"))
 		}
 		for _, entityPtr := range entityPtrs {
-			terminal.Printf("%s:\n", terminal.DefaultStylist.Path(parsing.GetContext(entityPtr).Path.String()))
-			err = transcribe.Print(entityPtr, format, os.Stdout, strict, pretty, false, nil)
+			terminal.Printf("%s:\n", terminal.StdoutStylist.Path(parsing.GetContext(entityPtr).Path.String()))
+			err = Transcriber().Write(entityPtr)
 			util.FailOnError(err)
 		}
 	}
@@ -205,8 +204,8 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 			util.Failf("No paths found matching filter: %q\n", filter)
 		} else if !terminal.Quiet {
 			for _, entityPtr := range entityPtrs {
-				terminal.Printf("%s\n", terminal.DefaultStylist.Path(parsing.GetContext(entityPtr).Path.String()))
-				err = transcribe.Print(entityPtr, format, os.Stdout, strict, pretty, false, nil)
+				terminal.Printf("%s\n", terminal.StdoutStylist.Path(parsing.GetContext(entityPtr).Path.String()))
+				err = Transcriber().Write(entityPtr)
 				util.FailOnError(err)
 			}
 		}
@@ -221,9 +220,10 @@ func Parse(context contextpkg.Context, url string) (*parserpkg.Context, *normal.
 		FailOnProblems(problems)
 		if ToPrintPhase(6) {
 			if len(dumpPhases) > 1 {
-				terminal.Printf("%s\n", terminal.DefaultStylist.Heading("Normalization"))
+				terminal.Printf("%s\n", terminal.StdoutStylist.Heading("Normalization"))
 			}
-			transcribe.Print(serviceTemplate, format, os.Stdout, strict, pretty, false, nil)
+			err = Transcriber().Write(serviceTemplate)
+			util.FailOnError(err)
 		}
 		return parserContext, serviceTemplate
 	} else {
@@ -243,19 +243,16 @@ func ToPrintPhase(phase uint) bool {
 	return false
 }
 
-func ParseInputs(context contextpkg.Context) {
+func ParseInputs(context contextpkg.Context, urlContext *exturl.Context) {
 	if inputsUrl != "" {
 		log.Infof("load inputs from %q", inputsUrl)
-
-		urlContext := exturl.NewContext()
-		util.OnExitError(urlContext.Release)
 
 		url, err := urlContext.NewValidAnyOrFileURL(context, inputsUrl, Bases(urlContext, false))
 		util.FailOnError(err)
 		reader, err := url.Open(context)
 		util.FailOnError(err)
 		reader = util.NewContextualReadCloser(context, reader)
-		defer reader.Close()
+		defer commonlog.CallAndLogWarning(reader.Close, "ParseInputs", log)
 		data, err := yamlkeys.DecodeAll(reader)
 		util.FailOnError(err)
 		for _, data_ := range data {

@@ -30,7 +30,7 @@ func NewNotificationAssignment(context *parsing.Context) *NotificationAssignment
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNotificationAssignment(context *parsing.Context) parsing.EntityPtr {
 	self := NewNotificationAssignment(context)
 
@@ -45,7 +45,7 @@ func ReadNotificationAssignment(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *NotificationAssignment) GetKey() string {
 	return self.Name
 }

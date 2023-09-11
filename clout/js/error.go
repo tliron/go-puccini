@@ -31,25 +31,25 @@ func (self *FunctionCall) NewErrorf(arguments []any, format string, arg ...any) 
 }
 
 func (self *FunctionCall) WrapError(arguments []any, err error) *Error {
-	return self.NewError(arguments, "", UnwrapException(err))
+	return self.NewError(arguments, "", err)
 }
 
 func (self *Error) Signature() string {
 	return self.FunctionCall.Signature(self.Arguments)
 }
 
-// error interface
+// (error interface)
 func (self *Error) Error() string {
 	_, _, message, _, _ := self.Problem(nil)
 	return message
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *Error) String() string {
 	return self.Error()
 }
 
-// problems.Problematic interface
+// ([problems.Problematic] interface)
 func (self *Error) Problem(stylist *terminal.Stylist) (string, string, string, int, int) {
 	if stylist == nil {
 		stylist = terminal.NewStylist(false)

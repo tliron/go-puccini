@@ -28,7 +28,7 @@ func NewWorkflowPreconditionDefinition(context *parsing.Context) *WorkflowPrecon
 	return &WorkflowPreconditionDefinition{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflowPreconditionDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewWorkflowPreconditionDefinition(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

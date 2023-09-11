@@ -45,7 +45,7 @@ func NewTemplate(context *parsing.Context) *Template {
 	return self
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadTemplate(context *parsing.Context) parsing.EntityPtr {
 	self := NewTemplate(context)
 	context.ScriptletNamespace.Merge(DefaultScriptletNamespace)
@@ -80,7 +80,7 @@ func (self *Template) NewPseudoParameter(name string, value string) {
 	self.Parameters[name] = parameter
 }
 
-// parsing.Importer interface
+// ([parsing.Importer] interface)
 func (self *Template) GetImportSpecs() []*parsing.ImportSpec {
 	var importSpecs []*parsing.ImportSpec
 	return importSpecs

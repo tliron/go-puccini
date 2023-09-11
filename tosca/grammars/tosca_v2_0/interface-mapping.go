@@ -33,7 +33,7 @@ func NewInterfaceMapping(context *parsing.Context) *InterfaceMapping {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceMapping(context *parsing.Context) parsing.EntityPtr {
 	self := NewInterfaceMapping(context)
 	if context.ValidateType(ard.TypeList) {
@@ -46,7 +46,7 @@ func ReadInterfaceMapping(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *InterfaceMapping) GetKey() string {
 	return self.Name
 }
@@ -59,8 +59,9 @@ func (self *InterfaceMapping) GetInterfaceDefinition() (*InterfaceDefinition, bo
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *InterfaceMapping) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

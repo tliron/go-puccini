@@ -41,7 +41,7 @@ func NewAttributeDefinition(context *parsing.Context) *AttributeDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadAttributeDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewAttributeDefinition(context)
 	var ignore []string
@@ -52,12 +52,12 @@ func ReadAttributeDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *AttributeDefinition) GetKey() string {
 	return self.Name
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *AttributeDefinition) ToValueMeta() *normal.ValueMeta {
 	information := normal.NewValueMeta()
 	information.Metadata = parsing.GetDataTypeMetadata(self.Metadata)
@@ -67,7 +67,7 @@ func (self *AttributeDefinition) ToValueMeta() *normal.ValueMeta {
 	return information
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *AttributeDefinition) GetDescription() string {
 	if self.Description != nil {
 		return *self.Description
@@ -76,22 +76,22 @@ func (self *AttributeDefinition) GetDescription() string {
 	}
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *AttributeDefinition) GetTypeMetadata() Metadata {
 	return self.Metadata
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *AttributeDefinition) GetConstraintClauses() ConstraintClauses {
 	return self.ConstraintClauses
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *AttributeDefinition) GetKeySchema() *Schema {
 	return self.KeySchema
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *AttributeDefinition) GetEntrySchema() *Schema {
 	return self.EntrySchema
 }
@@ -128,9 +128,9 @@ func (self *AttributeDefinition) Inherit(parentDefinition *AttributeDefinition) 
 	}
 }
 
-// parsing.Renderable interface
-// Avoid rendering more than once (can happen if we were called from Value.RenderAttribute)
+// ([parsing.Renderable] interface)
 func (self *AttributeDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

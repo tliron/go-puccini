@@ -29,7 +29,7 @@ func NewWorkflow(context *parsing.Context) *Workflow {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflow(context *parsing.Context) parsing.EntityPtr {
 	self := NewWorkflow(context)
 

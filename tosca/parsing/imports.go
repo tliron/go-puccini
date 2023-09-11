@@ -10,7 +10,7 @@ type Importer interface {
 	GetImportSpecs() []*ImportSpec
 }
 
-// From Importer interface
+// From [Importer] interface
 func GetImportSpecs(entityPtr EntityPtr) []*ImportSpec {
 	if importer, ok := entityPtr.(Importer); ok {
 		return importer.GetImportSpecs()

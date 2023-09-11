@@ -31,14 +31,14 @@ func NewRelationshipAssignment(context *parsing.Context) *RelationshipAssignment
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRelationshipAssignment(context *parsing.Context) parsing.EntityPtr {
 	self := NewRelationshipAssignment(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *RelationshipAssignment) Render() {
 	self.renderOnce.Do(self.render)
 }

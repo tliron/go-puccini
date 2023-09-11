@@ -55,16 +55,16 @@ if (enforceCapabilityOccurrences)
 
 traversal.unwrapCoercibles();
 
-if (puccini.arguments.history !== 'false')
+if (env.arguments.history !== 'false')
 	tosca.addHistory('resolve');
-puccini.write(clout)
+transcribe.output(clout)
 
 function resolve(sourceVertex, sourceNodeTemplate, requirement) {
 	let location = requirement.location;
 	let name = requirement.name;
 
 	if (isSubstituted(sourceNodeTemplate.name, name)) {
-		puccini.log.debugf('%s: skipping because in substitution mappings', location.path)
+		env.log.debugf('%s: skipping because in substitution mappings', location.path)
 		return;
 	}
 
@@ -107,7 +107,7 @@ function resolve(sourceVertex, sourceNodeTemplate, requirement) {
 				chosen = candidate;
 		}
 
-	puccini.log.debugf('%s: satisfied %q with capability %q in node template %q', location.path, name, chosen.capabilityName, chosen.nodeTemplateName);
+	env.log.debugf('%s: satisfied %q with capability %q in node template %q', location.path, name, chosen.capabilityName, chosen.nodeTemplateName);
 	addRelationship(sourceVertex, requirement, chosen.vertex, chosen.capabilityName);
 }
 
@@ -125,18 +125,18 @@ function gatherCandidateNodeTemplates(sourceVertex, requirement) {
 		let candidateNodeTemplateName = candidateNodeTemplate.name;
 
 		if ((nodeTemplateName !== '') && (nodeTemplateName !== candidateNodeTemplateName)) {
-			puccini.log.debugf('%s: node template %q is not named %q', path, candidateNodeTemplateName, nodeTemplateName);
+			env.log.debugf('%s: node template %q is not named %q', path, candidateNodeTemplateName, nodeTemplateName);
 			continue;
 		}
 
 		if ((nodeTypeName !== '') && !(nodeTypeName in candidateNodeTemplate.types)) {
-			puccini.log.debugf('%s: node template %q is not of type %q', path, candidateNodeTemplateName, nodeTypeName);
+			env.log.debugf('%s: node template %q is not of type %q', path, candidateNodeTemplateName, nodeTypeName);
 			continue;
 		}
 
 		// Node filter
 		if ((nodeTemplatePropertyValidators.length !== 0) && !arePropertiesValid(path, sourceVertex, 'node template', candidateNodeTemplateName, candidateNodeTemplate, nodeTemplatePropertyValidators)) {
-			puccini.log.debugf('%s: properties of node template %q do not validate', path, candidateNodeTemplateName);
+			env.log.debugf('%s: properties of node template %q do not validate', path, candidateNodeTemplateName);
 			continue;
 		}
 
@@ -159,7 +159,7 @@ function gatherCandidateNodeTemplates(sourceVertex, requirement) {
 				}
 
 				if ((capabilityPropertyValidators !== undefined) && (capabilityPropertyValidators.length !== 0) && !arePropertiesValid(path, sourceVertex, 'capability', candidateCapabilityName, candidateCapability, capabilityPropertyValidators)) {
-					puccini.log.debugf('%s: properties of capability %q in node template %q do not validate', path, candidateCapabilityName, candidateNodeTemplateName);
+					env.log.debugf('%s: properties of capability %q in node template %q do not validate', path, candidateCapabilityName, candidateNodeTemplateName);
 					valid = false;
 					break;
 				}
@@ -206,21 +206,21 @@ function gatherCandidateCapabilities(requirement, candidateNodeTemplates) {
 			let candidateCapabilityName = candidateCapabilities[cc].name;
 
 			if ((capabilityName !== '') && (capabilityName !== candidateCapabilityName)) {
-				puccini.log.debugf('%s: capability %q in node template %q is not named %q', path, candidateCapabilityName, candidateNodeTemplateName, capabilityName);
+				env.log.debugf('%s: capability %q in node template %q is not named %q', path, candidateCapabilityName, candidateNodeTemplateName, capabilityName);
 				continue;
 			}
 
 			let candidateCapability = candidateCapabilities[cc].capability;
 
 			if ((capabilityTypeName !== '') && !(capabilityTypeName in candidateCapability.types)) {
-				puccini.log.debugf('%s: capability %q in node template %q is not of type %q', path, candidateCapabilityName, candidateNodeTemplateName, capabilityTypeName);
+				env.log.debugf('%s: capability %q in node template %q is not of type %q', path, candidateCapabilityName, candidateNodeTemplateName, capabilityTypeName);
 				continue;
 			}
 
 			if (enforceCapabilityOccurrences) {
 				let maxRelationshipCount = candidateCapability.maxRelationshipCount;
 				if ((maxRelationshipCount !== -1) && (countRelationships(candidateVertex, candidateCapabilityName) === maxRelationshipCount)) {
-					puccini.log.debugf('%s: capability %q in node template %q already has %d relationships, the maximum allowed', path, candidateCapabilityName, candidateNodeTemplateName, maxRelationshipCount);
+					env.log.debugf('%s: capability %q in node template %q already has %d relationships, the maximum allowed', path, candidateCapabilityName, candidateNodeTemplateName, maxRelationshipCount);
 					continue;
 				}
 			}
@@ -283,7 +283,7 @@ function arePropertiesValid(path, sourceVertex, kind, name, entity, validatorsMa
 
 	let properties = entity.properties;
 	for (let propertyName in validatorsMap) {
-		puccini.log.debugf('%s: applying validators to property %q of %s %q', path, propertyName, kind, name);
+		env.log.debugf('%s: applying validators to property %q of %s %q', path, propertyName, kind, name);
 
 		let property = properties[propertyName];
 		if (property === undefined) {
@@ -335,14 +335,14 @@ function isMaxCountGreater(a, b) {
 
 function unsatisfied(location, name, message) {
 	if (typeof problems === 'undefined')
-		throw puccini.sprintf('%s: could not satisfy %q because %s', location.path, name, message);
+		throw util.sprintf('%s: could not satisfy %q because %s', location.path, name, message);
 	else
-		problems.reportFull(11, 'Resolution', location.path, puccini.sprintf('could not satisfy %q because %s', name, message), location.row, location.column);
+		problems.reportFull(11, 'Resolution', location.path, util.sprintf('could not satisfy %q because %s', name, message), location.row, location.column);
 }
 
 function notEnoughRelationships(location, relationshipCount, minRelationshipCount) {
 	if (typeof problems === 'undefined')
-		throw puccini.sprintf('%s: not enough relationships: %d < %d', location.path, relationshipCount, minRelationshipCount);
+		throw util.sprintf('%s: not enough relationships: %d < %d', location.path, relationshipCount, minRelationshipCount);
 	else
-		problems.reportFull(11, 'Resolution', location.path, puccini.sprintf('not enough relationships: %d < %d', relationshipCount, minRelationshipCount), location.row, location.column);
+		problems.reportFull(11, 'Resolution', location.path, util.sprintf('not enough relationships: %d < %d', relationshipCount, minRelationshipCount), location.row, location.column);
 }

@@ -41,7 +41,7 @@ func NewSubstitutionMappings(context *parsing.Context) *SubstitutionMappings {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadSubstitutionMappings(context *parsing.Context) parsing.EntityPtr {
 	if context.HasQuirk(parsing.QuirkSubstitutionMappingsRequirementsList) {
 		if map_, ok := context.Data.(ard.Map); ok {

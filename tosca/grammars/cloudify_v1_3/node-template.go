@@ -35,7 +35,7 @@ func NewNodeTemplate(context *parsing.Context) *NodeTemplate {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNodeTemplate(context *parsing.Context) parsing.EntityPtr {
 	self := NewNodeTemplate(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
@@ -43,7 +43,7 @@ func ReadNodeTemplate(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *NodeTemplate) Render() {
 	self.renderOnce.Do(self.render)
 }

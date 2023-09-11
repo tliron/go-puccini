@@ -24,7 +24,7 @@ func NewPropertyDefinition(context *parsing.Context) *PropertyDefinition {
 	return &PropertyDefinition{AttributeDefinition: NewAttributeDefinition(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPropertyDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewPropertyDefinition(context)
 	var ignore []string
@@ -54,8 +54,9 @@ func (self *PropertyDefinition) Inherit(parentDefinition *PropertyDefinition) {
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *PropertyDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

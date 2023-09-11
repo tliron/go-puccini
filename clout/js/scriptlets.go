@@ -34,7 +34,11 @@ func SetScriptlet(name string, scriptlet string, clout *cloutpkg.Clout) error {
 		return err
 	}
 
-	return ard.StringMapPutNested(metadata, name, scriptlet)
+	if ard.With(metadata).ForceGetPath(name, ".").Set(scriptlet) {
+		return nil
+	} else {
+		return fmt.Errorf("could not set scriptlet at path %q", name)
+	}
 }
 
 func GetScriptletNamesInSection(baseName string, clout *cloutpkg.Clout) ([]string, error) {
@@ -86,7 +90,7 @@ func GetScriptletsMetadataSection(name string, clout *cloutpkg.Clout) (ard.Value
 
 func GetScriptletsMetadata(clout *cloutpkg.Clout) (ard.StringMap, error) {
 	// TODO: check that version=1.0
-	if scriptlets, ok := ard.NewNode(clout.Metadata).Get("puccini").Get("scriptlets").StringMap(); ok {
+	if scriptlets, ok := ard.With(clout.Metadata).Get("puccini", "scriptlets").StringMap(); ok {
 		return scriptlets, nil
 	} else {
 		return nil, NewScriptletNotFoundError("%s", "no \"puccini.scriptlets\" metadata in Clout")
@@ -110,7 +114,7 @@ func IsScriptletNotFoundError(err error) bool {
 	return ok
 }
 
-// error interface
+// (error interface)
 func (self *ScriptletNotFoundError) Error() string {
 	return self.string
 }

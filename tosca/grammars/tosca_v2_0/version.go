@@ -36,7 +36,7 @@ type Version struct {
 	Build     uint32 `json:"build" yaml:"build"`
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadVersion(context *parsing.Context) parsing.EntityPtr {
 	var self Version
 
@@ -99,7 +99,7 @@ func ReadVersion(context *parsing.Context) parsing.EntityPtr {
 	return &self
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *Version) String() string {
 	return self.CanonicalString
 }

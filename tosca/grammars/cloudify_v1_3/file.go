@@ -39,7 +39,7 @@ func NewFile(context *parsing.Context) *File {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadFile(context *parsing.Context) parsing.EntityPtr {
 	self := NewFile(context)
 	context.ScriptletNamespace.Merge(DefaultScriptletNamespace)
@@ -47,7 +47,7 @@ func ReadFile(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Importer interface
+// ([parsing.Importer] interface)
 func (self *File) GetImportSpecs() []*parsing.ImportSpec {
 	var importSpecs = make([]*parsing.ImportSpec, 0, len(self.Imports))
 	for _, import_ := range self.Imports {

@@ -11,7 +11,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.7.6
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPolicy(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Metadata", "")
 	context.SetReadTag("TriggerDefinitions", "")

@@ -27,7 +27,7 @@ func NewServiceFile(context *parsing.Context) *ServiceFile {
 	return &ServiceFile{File: NewFile(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadServiceFile(context *parsing.Context) parsing.EntityPtr {
 	context.FunctionPrefix = "$"
 	self := NewServiceFile(context)

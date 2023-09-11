@@ -18,7 +18,7 @@ type Inherits interface {
 	Inherit()
 }
 
-// From Inherits interface
+// From [Inherits] interface
 func Inherit(entityPtr EntityPtr) bool {
 	if inherits, ok := entityPtr.(Inherits); ok {
 		inherits.Inherit()
@@ -36,7 +36,7 @@ type Hierarchical interface {
 	GetParent() EntityPtr
 }
 
-// From Hierarchical interface
+// From [Hierarchical] interface
 func GetParent(entityPtr EntityPtr) (EntityPtr, bool) {
 	if hierarchical, ok := entityPtr.(Hierarchical); ok {
 		parentPtr := hierarchical.GetParent()
@@ -308,8 +308,7 @@ func (self *Hierarchy) PrintChildren(indent int, treePrefix terminal.TreePrefix)
 	last := length - 1
 
 	// Sort
-	hierarchy := Hierarchy{children: make([]*Hierarchy, length)}
-	copy(hierarchy.children, self.children)
+	hierarchy := Hierarchy{children: append(self.children[:0:0], self.children...)}
 	sort.Sort(hierarchy)
 
 	for i, child := range hierarchy.children {
@@ -322,21 +321,21 @@ func (self *Hierarchy) PrintChildren(indent int, treePrefix terminal.TreePrefix)
 func (self *Hierarchy) PrintChild(indent int, treePrefix terminal.TreePrefix, last bool) {
 	treePrefix.Print(indent, last)
 	if self.entityPtr != nil {
-		terminal.Printf("%s\n", terminal.DefaultStylist.TypeName(self.GetContext().Name))
+		terminal.Printf("%s\n", terminal.StdoutStylist.TypeName(self.GetContext().Name))
 	}
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self Hierarchy) Len() int {
 	return len(self.children)
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self Hierarchy) Swap(i, j int) {
 	self.children[i], self.children[j] = self.children[j], self.children[i]
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self Hierarchy) Less(i, j int) bool {
 	iName := self.children[i].GetContext().Name
 	jName := self.children[j].GetContext().Name

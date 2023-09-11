@@ -29,7 +29,7 @@ func NewNotificationDefinition(context *parsing.Context) *NotificationDefinition
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNotificationDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewNotificationDefinition(context)
 
@@ -44,7 +44,7 @@ func ReadNotificationDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *NotificationDefinition) GetKey() string {
 	return self.Name
 }

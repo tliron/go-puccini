@@ -35,7 +35,7 @@ func NewOperationDefinition(context *parsing.Context) *OperationDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadOperationDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewOperationDefinition(context)
 
@@ -50,7 +50,7 @@ func ReadOperationDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *OperationDefinition) GetKey() string {
 	return self.Name
 }

@@ -54,7 +54,7 @@ func CopyAndMerge(target ard.Value, source ard.Value, copiedNames []string, targ
 		}
 
 		if sourceMap, ok := source.(ard.Map); ok {
-			ard.MergeMaps(targetMap, sourceMap, false)
+			ard.Merge(targetMap, sourceMap, false)
 		}
 	}
 

@@ -88,7 +88,7 @@ exports.addHistory = function(description) {
 	else
 		history = history.slice(0);
 	history.push({
-		timestamp: puccini.nowString(),
+		timestamp: util.nowString(),
 		description: description
 	});
 	metadata.history = history;
@@ -108,7 +108,7 @@ exports.getNestedValue = function(singular, plural, args) {
 	let count = 0;
 	if (arg in nodeTemplate.capabilities) {
 		value = nodeTemplate.capabilities[arg][plural];
-		singular = puccini.sprintf('capability %q %s', arg, singular);
+		singular = util.sprintf('capability %q %s', arg, singular);
 		arg = args[++a];
 	} else for (let e = 0, l = vertex.edgesOut.size(); e < l; e++) {
 		let edge = vertex.edgesOut[e];
@@ -118,7 +118,7 @@ exports.getNestedValue = function(singular, plural, args) {
 		if (relationship.name === arg)
 			if (count++ === nextArg) {
 				value = relationship[plural];
-				singular = puccini.sprintf('relationship %q %s', arg, singular);
+				singular = util.sprintf('relationship %q %s', arg, singular);
 				a += 2;
 				arg = args[a];
 				break;
@@ -127,14 +127,14 @@ exports.getNestedValue = function(singular, plural, args) {
 	if ((typeof value === 'object') && (value !== null) && (arg in value))
 		value = value[arg];
 	else
-		throw puccini.sprintf('%s %q not found in %q', singular, arg, nodeTemplate.name);
+		throw util.sprintf('%s %q not found in %q', singular, arg, nodeTemplate.name);
 	value = clout.coerce(value);
 	for (let i = a + 1; i < length; i++) {
 		arg = args[i];
 		if ((typeof value === 'object') && (value !== null) && (arg in value))
 			value = value[arg];
 		else
-			throw puccini.sprintf('nested %s %q not found in %q', singular, args.slice(a, i+1).join('.'), nodeTemplate.name);
+			throw util.sprintf('nested %s %q not found in %q', singular, args.slice(a, i+1).join('.'), nodeTemplate.name);
 	}
 	return value;
 };
@@ -144,22 +144,22 @@ exports.getModelableEntity = function(entity) {
 	switch (entity) {
 	case 'SELF':
 		if (!this || !this.site)
-			throw puccini.sprintf('%q cannot be used in this context', entity);
+			throw util.sprintf('%q cannot be used in this context', entity);
 		vertex = this.site;
 		break;
 	case 'SOURCE':
 		if (!this || !this.source)
-			throw puccini.sprintf('%q cannot be used in this context', entity);
+			throw util.sprintf('%q cannot be used in this context', entity);
 		vertex = this.source;
 		break;
 	case 'TARGET':
 		if (!this || !this.target)
-			throw puccini.sprintf('%q cannot be used in this context', entity);
+			throw util.sprintf('%q cannot be used in this context', entity);
 		vertex = this.target;
 		break;
 	case 'HOST':
 		if (!this || !this.site)
-			throw puccini.sprintf('%q cannot be used in this context', entity);
+			throw util.sprintf('%q cannot be used in this context', entity);
 		vertex = exports.getHost(this.site);
 		break;
 	default:
@@ -173,7 +173,7 @@ exports.getModelableEntity = function(entity) {
 	if (exports.isNodeTemplate(vertex))
 		return vertex;
 	else
-		throw puccini.sprintf('%q node template not found', entity);
+		throw util.sprintf('%q node template not found', entity);
 };
 
 exports.getHost = function(vertex) {
@@ -188,7 +188,7 @@ exports.getHost = function(vertex) {
 		}
 	}
 	if (exports.isNodeTemplate(vertex))
-		throw puccini.sprintf('"HOST" not found for node template %q', vertex.properties.name);
+		throw util.sprintf('"HOST" not found for node template %q', vertex.properties.name);
 	else
 		throw '"HOST" not found';
 };

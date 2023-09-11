@@ -37,19 +37,19 @@ func NewGroupType(context *parsing.Context) *GroupType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadGroupType(context *parsing.Context) parsing.EntityPtr {
 	self := NewGroupType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *GroupType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *GroupType) Inherit() {
 	logInherit.Debugf("group type: %s", self.Name)
 
@@ -71,8 +71,9 @@ func (self *GroupType) Inherit() {
 	// So we will do that check in the rendering phase, below
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *GroupType) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

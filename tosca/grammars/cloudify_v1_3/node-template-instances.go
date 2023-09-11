@@ -20,7 +20,7 @@ func NewNodeTemplateInstances(context *parsing.Context) *NodeTemplateInstances {
 	return &NodeTemplateInstances{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNodeTemplateInstances(context *parsing.Context) parsing.EntityPtr {
 	self := NewNodeTemplateInstances(context)
 

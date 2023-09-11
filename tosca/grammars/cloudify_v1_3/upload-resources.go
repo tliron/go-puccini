@@ -26,7 +26,7 @@ func NewUploadResources(context *parsing.Context) *UploadResources {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadUploadResources(context *parsing.Context) parsing.EntityPtr {
 	self := NewUploadResources(context)
 

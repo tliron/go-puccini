@@ -59,19 +59,21 @@ func CopyValueMeta(valueMeta *ValueMeta) *ValueMeta {
 			TypeMetadata:     make(map[string]string),
 			LocalMetadata:    make(map[string]string),
 		}
-		if length := len(valueMeta.Validators); length > 0 {
-			self.Validators = make(FunctionCalls, length)
-			copy(self.Validators, valueMeta.Validators)
-		}
+
+		self.Validators = append(valueMeta.Validators[:0:0], valueMeta.Validators...)
+
 		for key, value := range valueMeta.Metadata {
 			self.Metadata[key] = value
 		}
+
 		for key, value := range valueMeta.TypeMetadata {
 			self.TypeMetadata[key] = value
 		}
+
 		for key, value := range valueMeta.LocalMetadata {
 			self.LocalMetadata[key] = value
 		}
+
 		if !self.Empty() {
 			return &self
 		} else {

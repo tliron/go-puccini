@@ -4,34 +4,11 @@ set -e
 HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 . "$HERE/_env"
 
-COUNT=${1:-50}
+"$HERE/build"
 
-mkdir --parents "$ROOT/dist"
+m 'benchmarking...'
 
-function run () {
-	puccini-csar create "$ROOT/dist/cloud.tar.gz" "$ROOT/examples/csar" \
-	    --entry-definitions=main.yaml \
-	    --other-definitions='other 1.yaml' \
-	    --other-definitions='other 2.yaml' > /dev/null 2>&1
+cd "$ROOT"
 
-	puccini-csar create "$ROOT/dist/cloud.csar" "$ROOT/examples/csar" \
-    	--entry-definitions=main.yaml \
-    	--other-definitions='other 1.yaml' \
-    	--other-definitions='other 2.yaml' > /dev/null 2>&1
-
-	puccini-tosca compile "$ROOT/dist/cloud.tar.gz" --coerce > /dev/null 2>&1
-
-	puccini-tosca compile "$ROOT/dist/cloud.csar" --coerce > /dev/null 2>&1
-
-	puccini-tosca compile "$ROOT/dist/cloud.tar.gz" | \
-	puccini-clout scriptlet exec tosca.resolve > /dev/null 2>&1
-}
-
-m "running $COUNT times..."
-START=$(date +%s.%N)
-for (( i = 0; i < "$COUNT"; i++)); do
-	run
-done
-END=$(date +%s.%N)
-TIME=$(printf %.2f $(bc <<< "$END - $START"))
-m "seconds: $TIME"
+PUCCINI_TEST_ROOT=$ROOT \
+go test -count=10 -run=^$ -benchmem -bench=. "$@"

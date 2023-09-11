@@ -26,14 +26,14 @@ func NewInterfaceAssignment(context *parsing.Context) *InterfaceAssignment {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceAssignment(context *parsing.Context) parsing.EntityPtr {
 	self := NewInterfaceAssignment(context)
 	context.ReadFields(self)
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *InterfaceAssignment) GetKey() string {
 	return self.Name
 }

@@ -35,19 +35,19 @@ func NewRelationshipType(context *parsing.Context) *RelationshipType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRelationshipType(context *parsing.Context) parsing.EntityPtr {
 	self := NewRelationshipType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *RelationshipType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *RelationshipType) Inherit() {
 	logInherit.Debugf("relationship type: %s", self.Name)
 

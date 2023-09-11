@@ -15,7 +15,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.7.2
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRequirementAssignment(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Count", "")
 	context.SetReadTag("Directives", "")
@@ -28,7 +28,7 @@ func ReadRequirementAssignment(context *parsing.Context) parsing.EntityPtr {
 		// Long notation
 		context.ValidateUnsupportedFields(append(context.ReadFields(self), "occurrences"))
 
-		if occurrences := ard.NewNode(self.Context.Data).Get("occurrences"); occurrences.Value != nil {
+		if occurrences := ard.With(self.Context.Data).Get("occurrences"); occurrences != ard.NoNode {
 			occurrences_ := tosca_v2_0.ReadRange(context.FieldChild("occurrences", occurrences.Value)).(*tosca_v2_0.Range)
 			lower := int64(occurrences_.Lower)
 			self.Count = &lower

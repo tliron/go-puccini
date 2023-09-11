@@ -11,7 +11,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.8
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadServiceTemplate(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("WorkflowDefinitions", "")
 

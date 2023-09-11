@@ -194,7 +194,7 @@ func (self *Namespace) Print(indent int) {
 	for _, type_ := range types {
 		forType := self.namespace[type_]
 		terminal.PrintIndent(indent)
-		terminal.Printf("%s\n", terminal.DefaultStylist.TypeName(type_.Elem().String()))
+		terminal.Printf("%s\n", terminal.StdoutStylist.TypeName(type_.Elem().String()))
 
 		// Sort names
 		names := make([]string, len(forType))
@@ -218,17 +218,17 @@ func (self *Namespace) Print(indent int) {
 
 type TypesByName []reflect.Type
 
-// sort.Interface
+// ([sort.Interface])
 func (self TypesByName) Len() int {
 	return len(self)
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self TypesByName) Swap(i, j int) {
 	self[i], self[j] = self[j], self[i]
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self TypesByName) Less(i, j int) bool {
 	iName := self[i].Elem().String()
 	jName := self[j].Elem().String()

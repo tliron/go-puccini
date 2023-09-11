@@ -15,7 +15,7 @@ import (
 
 type Metadata map[string]ard.Value
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadMetadata(context *parsing.Context) parsing.EntityPtr {
 	var self map[string]ard.Value
 

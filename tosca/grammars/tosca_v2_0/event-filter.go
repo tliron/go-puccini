@@ -28,7 +28,7 @@ func NewEventFilter(context *parsing.Context) *EventFilter {
 	return &EventFilter{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadEventFilter(context *parsing.Context) parsing.EntityPtr {
 	self := NewEventFilter(context)
 	context.ReadFields(self)

@@ -1,14 +1,17 @@
 package parsing
 
 import (
+	contextpkg "context"
 	"fmt"
 	"strconv"
 	"strings"
 
+	"github.com/tliron/commonlog"
 	"github.com/tliron/exturl"
 	"github.com/tliron/go-ard"
 	"github.com/tliron/kutil/problems"
 	"github.com/tliron/kutil/terminal"
+	"github.com/tliron/kutil/util"
 	"github.com/tliron/yamlkeys"
 )
 
@@ -20,7 +23,7 @@ type Contextual interface {
 	GetContext() *Context
 }
 
-// From Contextual interface
+// From [Contextual] interface
 func GetContext(entityPtr EntityPtr) *Context {
 	if contextual, ok := entityPtr.(Contextual); ok {
 		return contextual.GetContext()
@@ -41,7 +44,7 @@ func NewContextContainer(context *Context) *ContextContainer {
 	return &ContextContainer{context}
 }
 
-// Contextual interface
+// ([Contextual] interface)
 func (self *ContextContainer) GetContext() *Context {
 	return self.Context
 }
@@ -152,6 +155,17 @@ func (self *Context) Is(typeNames ...ard.TypeName) bool {
 		}
 	}
 	return false
+}
+
+func (self *Context) Read(context contextpkg.Context) (ard.Value, ard.Locator, error) {
+	if reader, err := self.URL.Open(context); err == nil {
+		reader = util.NewContextualReadCloser(context, reader)
+		defer commonlog.CallAndLogWarning(reader.Close, "Context.Read", log)
+
+		return ard.Read(reader, "yaml", true)
+	} else {
+		return nil, nil, err
+	}
 }
 
 //

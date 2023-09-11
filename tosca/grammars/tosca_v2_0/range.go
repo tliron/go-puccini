@@ -22,7 +22,7 @@ type Range struct {
 	Upper uint64 `json:"upper" yaml:"upper"`
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRange(context *parsing.Context) parsing.EntityPtr {
 	var self Range
 
@@ -96,7 +96,7 @@ func NewRangeEntity(context *parsing.Context) *RangeEntity {
 	return &RangeEntity{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRangeEntity(context *parsing.Context) parsing.EntityPtr {
 	self := NewRangeEntity(context)
 	self.Range = ReadRange(context).(*Range)

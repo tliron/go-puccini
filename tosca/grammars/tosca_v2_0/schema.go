@@ -27,7 +27,7 @@ func NewSchema(context *parsing.Context) *Schema {
 	return &Schema{Entity: NewEntity(context)}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadSchema(context *parsing.Context) parsing.EntityPtr {
 	self := NewSchema(context)
 
@@ -42,12 +42,12 @@ func ReadSchema(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *Schema) ToValueMeta() *normal.ValueMeta {
 	return nil
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *Schema) GetDescription() string {
 	if self.Description != nil {
 		return *self.Description
@@ -56,28 +56,29 @@ func (self *Schema) GetDescription() string {
 	}
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *Schema) GetTypeMetadata() Metadata {
 	return self.Metadata
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *Schema) GetConstraintClauses() ConstraintClauses {
 	return self.ConstraintClauses
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *Schema) GetKeySchema() *Schema {
 	return self.KeySchema
 }
 
-// DataDefinition interface
+// ([DataDefinition] interface)
 func (self *Schema) GetEntrySchema() *Schema {
 	return self.EntrySchema
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Schema) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

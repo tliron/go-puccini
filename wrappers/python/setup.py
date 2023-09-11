@@ -16,7 +16,7 @@ with open(root / 'puccini' / '__init__.py') as f:
 with open(root / 'description.md') as f:
   description = f.read()
 
-go_version = os.environ.get('PUCCINI_GO_VERSION', '1.21.0')
+go_version = os.environ.get('PUCCINI_GO_VERSION', '1.21.6')
 root = str(root).replace('"', '\\"')
 
 script = '''\

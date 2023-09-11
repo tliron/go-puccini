@@ -47,7 +47,7 @@ type Timestamp struct {
 	TZMinute uint32  `json:"tzMinute" yaml:"tzMinute"`
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadTimestamp(context *parsing.Context) parsing.EntityPtr {
 	var self Timestamp
 
@@ -207,7 +207,7 @@ func ReadTimestamp(context *parsing.Context) parsing.EntityPtr {
 	return &self
 }
 
-// fmt.Stringer interface
+// ([fmt.Stringer] interface)
 func (self *Timestamp) String() string {
 	return self.CanonicalString
 }

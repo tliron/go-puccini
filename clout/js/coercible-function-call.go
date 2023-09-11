@@ -118,7 +118,7 @@ func (self *FunctionCall) Signature(arguments []ard.Value) string {
 	return fmt.Sprintf("%s(%s)", self.Name, strings.Join(s, ","))
 }
 
-// Coercible interface
+// ([Coercible] interface)
 func (self *FunctionCall) Coerce() (ard.Value, error) {
 	arguments, err := self.CoerceArguments()
 	if err != nil {
@@ -127,7 +127,7 @@ func (self *FunctionCall) Coerce() (ard.Value, error) {
 
 	logEvaluate.Debugf("%s %s", self.Path, self.Signature(arguments))
 
-	data, err := self.ExecutionContext.Call(self.Name, "evaluate", arguments)
+	data, err := self.ExecutionContext.Call(self.Name, "evaluate", arguments...)
 	if err != nil {
 		return nil, self.WrapError(arguments, err)
 	}
@@ -145,12 +145,12 @@ func (self *FunctionCall) Coerce() (ard.Value, error) {
 	}
 }
 
-// Coercible interface
+// ([Coercible] interface)
 func (self *FunctionCall) AddValidators(validators Validators) {
 	self.Validators = append(self.Validators, validators...)
 }
 
-// Coercible interface
+// ([Coercible] interface)
 func (self *FunctionCall) Unwrap() ard.Value {
 	return self.Notation
 }
@@ -177,7 +177,7 @@ func (self *FunctionCall) Validate(value ard.Value, errorWhenInvalid bool) (bool
 
 	logValidate.Debugf("%s %s", self.Path, self.Signature(arguments))
 
-	r, err := self.ExecutionContext.Call(self.Name, "validate", arguments)
+	r, err := self.ExecutionContext.Call(self.Name, "validate", arguments...)
 	if err != nil {
 		return false, self.WrapError(arguments, err)
 	}
@@ -205,7 +205,7 @@ func (self *FunctionCall) Convert(value ard.Value) (ard.Value, error) {
 
 	logConvert.Debugf("%s %s", self.Path, self.Signature(arguments))
 
-	if r, err := self.ExecutionContext.Call(self.Name, "convert", arguments); err == nil {
+	if r, err := self.ExecutionContext.Call(self.Name, "convert", arguments...); err == nil {
 		return r, nil
 	} else {
 		return false, self.WrapError(arguments, err)
@@ -226,7 +226,7 @@ func encodeArgument(argument ard.Value) string {
 		argument_ = strings.ReplaceAll(argument_, "\n", "¶")
 		return fmt.Sprintf("%q", argument_)
 	default:
-		argument__, _ := transcribe.StringifyJSON(argument, "")
+		argument__, _ := transcribe.NewTranscriber().StringifyJSON(argument)
 		return argument__
 	}
 }

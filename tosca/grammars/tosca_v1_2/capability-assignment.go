@@ -13,7 +13,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.7.1
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadCapabilityAssignment(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Occurrences", "")
 

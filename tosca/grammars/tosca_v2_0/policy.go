@@ -40,20 +40,21 @@ func NewPolicy(context *parsing.Context) *Policy {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPolicy(context *parsing.Context) parsing.EntityPtr {
 	self := NewPolicy(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *Policy) GetKey() string {
 	return self.Name
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *Policy) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

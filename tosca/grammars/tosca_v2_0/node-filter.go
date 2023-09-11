@@ -28,7 +28,7 @@ func NewNodeFilter(context *parsing.Context) *NodeFilter {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNodeFilter(context *parsing.Context) parsing.EntityPtr {
 	self := NewNodeFilter(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))

@@ -56,12 +56,10 @@ func (self *File) GetContext() *parsing.Context {
 
 func (self *File) PrintImports(indent int, treePrefix terminal.TreePrefix) {
 	self.importsLock.RLock()
-	length := len(self.Imports)
-	imports := make(Files, length)
-	copy(imports, self.Imports)
+	imports := append(self.Imports[:0:0], self.Imports...)
 	self.importsLock.RUnlock()
 
-	last := length - 1
+	last := len(imports) - 1
 
 	// Sort
 	sort.Sort(imports)
@@ -75,7 +73,7 @@ func (self *File) PrintImports(indent int, treePrefix terminal.TreePrefix) {
 
 func (self *File) PrintNode(indent int, treePrefix terminal.TreePrefix, last bool) {
 	treePrefix.Print(indent, last)
-	terminal.Printf("%s\n", terminal.DefaultStylist.Value(self.GetContext().URL.String()))
+	terminal.Printf("%s\n", terminal.StdoutStylist.Value(self.GetContext().URL.String()))
 }
 
 //
@@ -84,17 +82,17 @@ func (self *File) PrintNode(indent int, treePrefix terminal.TreePrefix, last boo
 
 type Files []*File
 
-// sort.Interface
+// ([sort.Interface])
 func (self Files) Len() int {
 	return len(self)
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self Files) Swap(i, j int) {
 	self[i], self[j] = self[j], self[i]
 }
 
-// sort.Interface
+// ([sort.Interface])
 func (self Files) Less(i, j int) bool {
 	iName := self[i].GetContext().URL.String()
 	jName := self[j].GetContext().URL.String()

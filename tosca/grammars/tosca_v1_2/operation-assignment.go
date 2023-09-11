@@ -13,7 +13,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.5.13
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadOperationAssignment(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("Outputs", "")
 

@@ -36,7 +36,7 @@ func NewWorkflowActivityCallOperation(context *parsing.Context) *WorkflowActivit
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadWorkflowActivityCallOperation(context *parsing.Context) parsing.EntityPtr {
 	self := NewWorkflowActivityCallOperation(context)
 

@@ -7,6 +7,43 @@ import (
 	"github.com/tliron/kutil/util"
 )
 
+func (self *ExecutionContext) NewMapValue(list ard.List, notation ard.StringMap, meta ard.StringMap) (*Value, error) {
+	var keyMeta ard.StringMap
+	var valueMeta ard.StringMap
+	var fieldsMeta ard.StringMap
+	if meta != nil {
+		if data, ok := meta["key"]; ok {
+			if map_, ok := data.(ard.StringMap); ok {
+				keyMeta = map_
+			} else {
+				return nil, fmt.Errorf("malformed meta \"key\", not a map: %T", data)
+			}
+		}
+
+		if data, ok := meta["value"]; ok {
+			if map_, ok := data.(ard.StringMap); ok {
+				valueMeta = map_
+			} else {
+				return nil, fmt.Errorf("malformed meta \"value\", not a map: %T", data)
+			}
+		}
+
+		if data, ok := meta["fields"]; ok {
+			if map_, ok := data.(ard.StringMap); ok {
+				fieldsMeta = map_
+			} else {
+				return nil, fmt.Errorf("malformed meta \"fields\", not a map: %T", data)
+			}
+		}
+	}
+
+	if map_, err := self.NewMap(list, keyMeta, valueMeta, fieldsMeta); err == nil {
+		return self.NewValue(map_, notation, meta)
+	} else {
+		return nil, err
+	}
+}
+
 //
 // Map
 //

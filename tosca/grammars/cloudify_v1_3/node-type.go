@@ -27,19 +27,19 @@ func NewNodeType(context *parsing.Context) *NodeType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadNodeType(context *parsing.Context) parsing.EntityPtr {
 	self := NewNodeType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *NodeType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *NodeType) Inherit() {
 	logInherit.Debugf("node type: %s", self.Name)
 

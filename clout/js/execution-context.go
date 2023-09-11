@@ -1,9 +1,5 @@
 package js
 
-import (
-	"fmt"
-)
-
 //
 // ExecutionContext
 //
@@ -24,13 +20,9 @@ func (self *CloutContext) NewExecutionContext(site any, source any, target any) 
 	}
 }
 
-func (self *ExecutionContext) Call(scriptletName string, functionName string, arguments []any) (any, error) {
-	if exports, err := self.CloutContext.JSContext.Environment.RequireID(scriptletName); err == nil {
-		if function := exports.Get(functionName); function != nil {
-			return CallGojaFunction(self.CloutContext.JSContext.Environment.Runtime, function, self, arguments)
-		} else {
-			return nil, fmt.Errorf("function not exported from module: %s", functionName)
-		}
+func (self *ExecutionContext) Call(scriptletName string, functionName string, arguments ...any) (any, error) {
+	if exports, err := self.CloutContext.JSContext.Environment.Require(scriptletName, true, nil); err == nil {
+		return self.CloutContext.JSContext.Environment.GetAndCall(exports, functionName, self, arguments...)
 	} else {
 		return nil, err
 	}

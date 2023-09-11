@@ -15,6 +15,12 @@ import (
 	"github.com/vmihailenco/msgpack/v5"
 )
 
+func (self *Environment) CreateCloutExtension(clout *cloutpkg.Clout) commonjs.CreateExtensionFunc {
+	return func(jsContext *commonjs.Context) any {
+		return self.NewCloutAPI(clout, jsContext)
+	}
+}
+
 //
 // CloutAPI
 //
@@ -25,26 +31,26 @@ type CloutAPI struct {
 	cloutContext *CloutContext
 }
 
-func (self *Context) NewCloutAPI(clout *cloutpkg.Clout, jsContext *commonjs.Context) *CloutAPI {
+func (self *Environment) NewCloutAPI(clout *cloutpkg.Clout, jsContext *commonjs.Context) *CloutAPI {
 	return &CloutAPI{
 		clout,
 		self.NewCloutContext(clout, jsContext),
 	}
 }
 
-func (self *CloutAPI) Load(context contextpkg.Context, data any) (*CloutAPI, error) {
+func (self *CloutAPI) Load(context contextpkg.Context, data any, forceFormat string) (*CloutAPI, error) {
 	var clout *cloutpkg.Clout
 	var err error
 
 	switch data_ := data.(type) {
 	case exturl.URL:
-		if clout, err = cloutpkg.Load(context, data_); err != nil {
+		if clout, err = cloutpkg.Load(context, data_, forceFormat); err != nil {
 			return nil, err
 		}
 
 	case string:
 		url := self.cloutContext.Context.URLContext.NewAnyOrFileURL(data_)
-		if clout, err = cloutpkg.Load(context, url); err != nil {
+		if clout, err = cloutpkg.Load(context, url, forceFormat); err != nil {
 			return nil, err
 		}
 
@@ -66,7 +72,7 @@ func (self *CloutAPI) NewKey() string {
 
 func (self *CloutAPI) Call(scriptletName string, functionName string, arguments []any) (any, error) {
 	executionContext := self.cloutContext.NewExecutionContext(nil, nil, nil)
-	return executionContext.Call(scriptletName, functionName, arguments)
+	return executionContext.Call(scriptletName, functionName, arguments...)
 }
 
 // TODO: unused?

@@ -34,19 +34,19 @@ func NewPolicyType(context *parsing.Context) *PolicyType {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadPolicyType(context *parsing.Context) parsing.EntityPtr {
 	self := NewPolicyType(context)
 	context.ValidateUnsupportedFields(context.ReadFields(self))
 	return self
 }
 
-// parsing.Hierarchical interface
+// ([parsing.Hierarchical] interface)
 func (self *PolicyType) GetParent() parsing.EntityPtr {
 	return self.Parent
 }
 
-// parsing.Inherits interface
+// ([parsing.Inherits] interface)
 func (self *PolicyType) Inherit() {
 	logInherit.Debugf("policy type: %s", self.Name)
 
@@ -68,8 +68,9 @@ func (self *PolicyType) Inherit() {
 	// So we will do that check in the rendering phase, below
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *PolicyType) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

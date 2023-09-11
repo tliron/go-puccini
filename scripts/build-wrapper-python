@@ -16,6 +16,7 @@ PLATFORM=manylinux2014_x86_64 # default is linux_x86_64, which is not widely use
 git_version
 
 VERSION=${SHORT_VERSION:1}$SUFFIX
+export PUCCINI_GO_VERSION=$GO_VERSION
 
 rm --force --recursive "$DIST"
 mkdir --parents "$DIST"
@@ -31,7 +32,7 @@ use ." > puccini/go-source/go.work
 # KUTIL=$(readlink --canonicalize "$ROOT/../kutil")
 # KUTIL=${KUTIL//\\/\\\\}
 # KUTIL=${KUTIL//\"/\\\"}
-# echo "go 1.20
+# echo "go 1.21
 # replace github.com/tliron/kutil => \"$KUTIL\"
 # use ." > puccini/go-source/go.work
 

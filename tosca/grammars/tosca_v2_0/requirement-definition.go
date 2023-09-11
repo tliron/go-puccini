@@ -39,7 +39,7 @@ func NewRequirementDefinition(context *parsing.Context) *RequirementDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadRequirementDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewRequirementDefinition(context)
 
@@ -54,7 +54,7 @@ func ReadRequirementDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *RequirementDefinition) GetKey() string {
 	return self.Name
 }
@@ -94,8 +94,9 @@ func (self *RequirementDefinition) Inherit(parentDefinition *RequirementDefiniti
 	}
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *RequirementDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

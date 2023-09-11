@@ -92,7 +92,6 @@ func Compile(url *C.char, inputs *C.char, quirks *C.char, resolve C.char, coerce
 		History:    true,
 		Format:     "yaml",
 		Strict:     true,
-		Pretty:     false,
 	}
 
 	if resolve != 0 {
@@ -124,6 +123,6 @@ func result(clout *cloutpkg.Clout, problems *problems.Problems, err error) *C.ch
 		result["error"] = err.Error()
 	}
 
-	result_, _ := transcribe.StringifyYAML(result, "  ", true, nil) // TODO: err
+	result_, _ := transcribe.NewTranscriber().SetIndentSpaces(2).SetStrict(true).StringifyYAML(result) // TODO: err
 	return C.CString(result_)
 }

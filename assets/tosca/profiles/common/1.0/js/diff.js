@@ -2,16 +2,16 @@
 const traversal = require('tosca.lib.traversal');
 const tosca = require('tosca.lib.utils');
 
-if (!puccini.arguments.base) {
+if (!env.arguments.base) {
     throw 'must provide "base" argument';
 }
 
-let base = clout.load(puccini.arguments.base);
+let base = clout.load(env.arguments.base);
 
 traversal.coerce();
 traversal.coerce(base);
 
-puccini.write(diff(clout, base));
+transcribe.output(diff(clout, base));
 
 function diff(clout, base) {
     let nodes = gatherNodeTemplates(clout);

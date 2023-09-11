@@ -40,7 +40,7 @@ func NewInterfaceDefinition(context *parsing.Context) *InterfaceDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadInterfaceDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewInterfaceDefinition(context)
 
@@ -57,7 +57,7 @@ func ReadInterfaceDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *InterfaceDefinition) GetKey() string {
 	return self.Name
 }
@@ -83,8 +83,9 @@ func (self *InterfaceDefinition) Inherit(parentDefinition *InterfaceDefinition) 
 	self.NotificationDefinitions.Inherit(parentDefinition.NotificationDefinitions)
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *InterfaceDefinition) Render() {
+	// Avoid rendering more than once
 	self.renderOnce.Do(self.render)
 }
 

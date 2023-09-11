@@ -42,7 +42,7 @@ func NewTriggerDefinition(context *parsing.Context) *TriggerDefinition {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadTriggerDefinition(context *parsing.Context) parsing.EntityPtr {
 	self := NewTriggerDefinition(context)
 	context.ValidateUnsupportedFields(append(context.ReadFields(self), "action"))
@@ -70,12 +70,12 @@ func ReadTriggerDefinition(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *TriggerDefinition) GetKey() string {
 	return self.Name
 }
 
-// parsing.Renderable interface
+// ([parsing.Renderable] interface)
 func (self *TriggerDefinition) Render() {
 	self.renderOnce.Do(self.render)
 }

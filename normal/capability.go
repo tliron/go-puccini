@@ -6,7 +6,6 @@ import (
 
 	"github.com/fxamacker/cbor/v2"
 	"github.com/tliron/go-ard"
-	"github.com/tliron/kutil/util"
 )
 
 //
@@ -88,12 +87,12 @@ func (self *Capability) MarshalCBOR() ([]byte, error) {
 
 // ([msgpack.Marshaler] interface)
 func (self *Capability) MarshalMsgpack() ([]byte, error) {
-	return util.MarshalMessagePack(self.Marshalable())
+	return ard.MarshalMessagePack(self.Marshalable())
 }
 
 // ([ard.ToARD] interface)
 func (self *Capability) ToARD(reflector *ard.Reflector) (any, error) {
-	return reflector.Unpack(self.Marshalable(), false)
+	return reflector.Unpack(self.Marshalable())
 }
 
 //

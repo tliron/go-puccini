@@ -31,7 +31,7 @@ func NewOperationAssignment(context *parsing.Context) *OperationAssignment {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadOperationAssignment(context *parsing.Context) parsing.EntityPtr {
 	self := NewOperationAssignment(context)
 
@@ -58,7 +58,7 @@ func ValidateOperationExecutor(executor string, context *parsing.Context) {
 	}
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *OperationAssignment) GetKey() string {
 	return self.Name
 }

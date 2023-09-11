@@ -22,7 +22,7 @@ type PreReadable interface {
 	PreRead()
 }
 
-// From PreReadable interface
+// From [PreReadable] interface
 func PreRead(entityPtr EntityPtr) bool {
 	if preReadable, ok := entityPtr.(PreReadable); ok {
 		preReadable.PreRead()

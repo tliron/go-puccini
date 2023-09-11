@@ -44,7 +44,7 @@ func NewOutputMapping(context *parsing.Context) *OutputMapping {
 	}
 }
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadOutputMapping(context *parsing.Context) parsing.EntityPtr {
 	self := NewOutputMapping(context)
 
@@ -56,7 +56,7 @@ func ReadOutputMapping(context *parsing.Context) parsing.EntityPtr {
 	return self
 }
 
-// parsing.Mappable interface
+// ([parsing.Mappable] interface)
 func (self *OutputMapping) GetKey() string {
 	return self.Name
 }

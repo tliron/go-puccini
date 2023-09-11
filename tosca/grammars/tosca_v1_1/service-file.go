@@ -12,7 +12,7 @@ import (
 // [TOSCA-Simple-Profile-YAML-v1.0] @ 3.9
 //
 
-// parsing.Reader signature
+// ([parsing.Reader] signature)
 func ReadServiceFile(context *parsing.Context) parsing.EntityPtr {
 	context.SetReadTag("ServiceTemplate", "topology_template,ServiceTemplate")
 	context.SetReadTag("Profile", "")
