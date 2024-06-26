@@ -3,12 +3,12 @@ module github.com/tliron/puccini
 go 1.22
 
 require (
-	github.com/dop251/goja v0.0.0-20240220182346-e401ed450204
-	github.com/fxamacker/cbor/v2 v2.6.0
-	github.com/klauspost/compress v1.17.7
+	github.com/dop251/goja v0.0.0-20240610225006-393f6d42497b
+	github.com/fxamacker/cbor/v2 v2.7.0
+	github.com/klauspost/compress v1.17.9
 	github.com/klauspost/pgzip v1.2.6
 	github.com/segmentio/ksuid v1.0.4
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 	github.com/tliron/commonjs-goja v0.2.4
 	github.com/tliron/commonlog v0.2.17
 	github.com/tliron/exturl v0.4.4
