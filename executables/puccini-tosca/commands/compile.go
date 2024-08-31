@@ -12,11 +12,12 @@ import (
 )
 
 var (
-	output    string
-	resolve   bool
-	coerce    bool
-	exec      string
-	arguments map[string]string
+	enableOutput bool
+	output       string
+	resolve      bool
+	coerce       bool
+	exec         string
+	arguments    map[string]string
 )
 
 func init() {
@@ -47,6 +48,7 @@ var compileCommand = &cobra.Command{
 			url = args[0]
 		}
 
+		enableOutput = true
 		dumpPhases = nil
 		Compile(contextpkg.TODO(), url)
 	},
@@ -87,7 +89,7 @@ func Compile(context contextpkg.Context, url string) {
 	if exec != "" {
 		err = Exec(context, exec, arguments, clout, urlContext)
 		util.FailOnError(err)
-	} else if !terminal.Quiet || (output != "") {
+	} else if enableOutput && (!terminal.Quiet || (output != "")) {
 		err = Transcriber().Write(clout)
 		util.FailOnError(err)
 	}

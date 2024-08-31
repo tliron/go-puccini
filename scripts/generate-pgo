@@ -6,10 +6,10 @@ HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 
 EXECUTABLES=$ROOT/executables
 
-rm --force "$EXECUTABLES/puccini-tosca/default.pgo"
-rm --force "$EXECUTABLES/puccini-clout/default.pgo"
-rm --force "$EXECUTABLES/puccini-csar/default.pgo"
-rm --force "$ROOT/library/default.pgo"
+rm --force "$EXECUTABLES/puccini-tosca"/*.pgo
+rm --force "$EXECUTABLES/puccini-clout"/*.pgo
+rm --force "$EXECUTABLES/puccini-csar"/*.pgo
+rm --force "$ROOT/library"/*.pgo
 
 "$HERE/build"
 

@@ -2,7 +2,7 @@ Puccini TOSCA Quirks
 ====================
 
 These are activated via the `--quirk/-x` switch for
-[**puccini-tosca**](../../puccini-tosca/):
+[**puccini-tosca**](../../executables/puccini-tosca/):
 
 * **imports.implicit.disable**: In TOSCA 1.0-1.3 the Simple Profile is implicitly imported by
   default. This quirk will disable implicit imports.
@@ -36,10 +36,10 @@ These are activated via the `--quirk/-x` switch for
 
 * **namespace.normative.shortcuts.disable**: In TOSCA 1.0-1.3 all the normative types have long
   names, such as "tosca.nodes.Compute", prefixed names ("tosca:Compute"), and also short names
-  ("Compute"). Those short names are annoying because it means you can't use those names for your
-  own types. This quirk disables the short names (the prefixed names remain).
+  ("Compute"). Those short names might be annoying because it means you can't use those names for
+  your own types. This quirk disables the short names (the prefixed names remain).
 
-* **substitution_mappings.requirements.list**: According to the examples in the TOSCA 1.0-1.3 specs,
+* **substitution_mappings.requirements.list**: According to the examples in the TOSCA 1.0-2.0 specs,
   the `requirements` key under `substitution_mappings` is syntactically a map. However, this syntax
   is inconsistent because it doesn't match the syntax in node templates, which is a sequenced list.
   (In node types, too, it is a sequenced list, although grammatically it works like a map.) This

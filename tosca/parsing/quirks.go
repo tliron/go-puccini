@@ -50,8 +50,8 @@ const (
 
 	// In TOSCA 1.0-1.3 all the normative types have long
 	// names, such as "tosca.nodes.Compute", prefixed names ("tosca:Compute"), and also short names
-	// ("Compute"). Those short names are annoying because it means you can't use those names for your
-	// own types. This quirk disables the short names (the prefixed names remain).
+	// ("Compute"). Those short names might be annoying because it means you can't use those names for
+	// your own types. This quirk disables the short names (the prefixed names remain).
 	QuirkNamespaceNormativeShortcutsDisable Quirk = "namespace.normative.shortcuts.disable"
 
 	// According to the examples in the TOSCA 1.0-1.3 specs,

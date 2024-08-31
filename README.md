@@ -90,7 +90,7 @@ individual files as well as packaged in
 [CSAR files](https://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.3/TOSCA-Simple-Profile-YAML-v1.3.html#_Toc302251718).
 
 Puccini also comes with a simple CSAR creation tool that can be used independently of the
-other tools, [`puccini-csar`](puccini-csar/).
+other tools, [`puccini-csar`](executables/puccini-csar/).
 
 ### Design Principles
 

@@ -40,6 +40,20 @@ The list of supported quirks is maintained [here](../tosca/parsing/QUIRKS.md).
 See the [tutorial](../TUTORIAL.md) for more detail.
 
 
+`validate`
+----------
+
+Equivalent to `compile` but without Clout output. Will print "valid" to stderr if valid, otherwise
+will print the problems. Use `--quiet` to suppress all output.
+
+Note that both `validate` and `compile` set the exit code: 0 for valid, 1 if there are problems, which
+is useful in scripts:
+
+    if puccini-tosca validate service.yaml --quiet; then
+      deploy servicel
+    fi
+
+
 `parse`
 -------
 
